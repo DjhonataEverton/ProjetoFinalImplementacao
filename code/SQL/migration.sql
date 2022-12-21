@@ -23,3 +23,12 @@ CREATE TABLE IF NOT EXISTS `ctpedidos`.`tb_commissionare` (
   `email` VARCHAR(75) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_commissionare`));
+
+CREATE TABLE `ctpedidos`.`tb_order` (
+  `id_order` INT NOT NULL AUTO_INCREMENT,
+  `id_client` INT NOT NULL,
+  `product` VARCHAR(45) NOT NULL,
+  `quantity` INT(10) NOT NULL,
+  `time` DATETIME NOT NULL,
+  `accpet` CHAR NOT NULL,
+  PRIMARY KEY (`id_order`));
