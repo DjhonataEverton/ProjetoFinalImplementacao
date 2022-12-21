@@ -11,5 +11,15 @@ module.exports = {
 
             })
         })
-    }
+    },
+
+    listarClientes: () => {
+        return new Promise((aceito, rejeitado) => {
+
+            conn.query('SELECT * FROM tb_client', (error, results) => {
+                if (error) { rejeitado(error); return; }
+                aceito(results);
+            });
+        });
+    },
 }

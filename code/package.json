@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon ../code/connection.js",
+    "dev": "nodemon ../code/app.js",
     "watch": "nodemon ../code/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
