@@ -6,16 +6,16 @@ class clienteService {
         const sql = 'INSERT INTO tb_client (cpf_cnpj, name, email, password) values (?,?,?,?)'
         const values = [cpf_cnpj, name, email, password]
         try{
-            const res = conn.query(sql, values)
+            const res = await conn.query(sql, values)
             return res
         }catch(error){
             console.log(error)
         }
     }
-    async listarCliente () {
+    async listarClientes () {
         const sql = 'SELECT * FROM tb_client'
         try {
-            const res = conn.query(sql)
+            const res = await conn.query(sql)
             return res
         } catch (error) {
             console.log(error)

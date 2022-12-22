@@ -4,7 +4,8 @@ class produtosService {
     async listarProdutos () {
         const sql = 'SELECT * FROM tb_products'
         try {
-            conn.query(sql)
+            let res = await conn.query(sql)
+            return res
         } catch (error) {
             console.log(error)
         }
@@ -14,7 +15,8 @@ class produtosService {
         const sql = 'SELECT * FROM tb_products WHERE id_products = ?'
         const values = [id_products]
         try {
-            conn.query(sql,values)
+            const res = await conn.query(sql,values)
+            return res
         } catch (error) {
             console.log(error)
         }
@@ -24,7 +26,8 @@ class produtosService {
         const sql = 'INSERT INTO tb_products (product, price, unity) VALUES (?, ?, ?)'
         const values = [product, price, unity]
         try {
-            conn.query(sql,values)
+            const res = await conn.query(sql,values)
+            return res
         } catch (error) {
             console.log(error)
         }
@@ -33,7 +36,8 @@ class produtosService {
         const sql = 'UPDATE tb_products SET product = ?, price = ?, unity = ? WHERE id_products = ?'
         const values = [product, price, unity, id_products]
         try {
-            conn.query(sql,values)
+            const res = await conn.query(sql,values)
+            return res
         } catch (error) {
             console.log(error)
         }
@@ -42,7 +46,8 @@ class produtosService {
         const sql = 'DELETE FROM tb_products WHERE id_products = ?'
         const values = [id_products]
         try {
-            conn.query(sql,values)
+            const res = await conn.query(sql,values)
+            return res
         } catch (error) {
             console.log(error)
         }

@@ -1,7 +1,8 @@
 const clienteService = require('../services/clienteService')
 
-module.exports = {
-    listarClientes: async (req, res) => {
+class clienteController {
+    async listarClientes (req, res){
+
         let json = { error: '', result: [] };
 
         let clientes = await clienteService.listarClientes();
@@ -18,3 +19,5 @@ module.exports = {
         res.json(json);
     }
 }
+
+module.exports = new clienteController()
