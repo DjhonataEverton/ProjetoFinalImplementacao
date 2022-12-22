@@ -8,10 +8,14 @@ module.exports = {
 
         for (let i in produtos) {
             json.result.push({
-                id_products: produtos[i].id_products,
+                /*id_products: produtos[i].id_products,
                 product: produtos[i].product,
                 price: produtos[i].price, 
-                unity: produtos[i].unity 
+                unity: produtos[i].unity */
+                id_products: id_products[i],
+                product: product[i],
+                price: price[i], 
+                unity: unity[i]
             });
         }
 

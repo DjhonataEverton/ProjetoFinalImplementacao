@@ -4,7 +4,7 @@ class produtosService {
     async listarProdutos () {
         const sql = 'SELECT * FROM tb_products'
         try {
-            let res = await conn.query(sql)
+            let res = conn.query(sql)
             return res
         } catch (error) {
             console.log(error)

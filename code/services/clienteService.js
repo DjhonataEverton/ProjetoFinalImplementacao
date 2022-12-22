@@ -1,6 +1,6 @@
 const conn = require('../connection')
 
-class clienteService {
+module.exports = class clienteService {
 
     async cadastrarCliente (cpf_cnpj, name, email, password){
         const sql = 'INSERT INTO tb_client (cpf_cnpj, name, email, password) values (?,?,?,?)'
@@ -22,5 +22,3 @@ class clienteService {
         }
     }
 }
-
-module.exports = new clienteService()
