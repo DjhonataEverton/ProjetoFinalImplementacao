@@ -5,6 +5,7 @@ const clienteController = require('../controllers/clienteController');
 const produtoController = require('../controllers/produtoController');
 
 router.get('/clientes', clienteController.listarClientes);
+router.post('/ecomendas',clienteController.cadastrarClientes)
 //router.get('/encomendas/:codigo', clienteController.buscarUm);
 //router.post('/encomendas', clienteController.inserir);
 //router.put('/encomendas/:codigo', clienteController.alterar);

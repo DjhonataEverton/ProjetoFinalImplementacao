@@ -5,8 +5,8 @@ class clienteController {
 
         let json = { error: '', result: [] };
 
-        let clientes = await clienteService.listarClientes;
-
+        const clientes = await clienteService.listarClientes;
+        
         for (let i in clientes) {
             json.result.push({
                 id_client: clientes[i].id_client,
@@ -17,6 +17,16 @@ class clienteController {
             });
         }
         res.json(json)
+    }
+    async cadastrarClientes (req,res){
+        let json = {error: '', result: {}}
+
+        let cpf_cnpj = req.body.cpf_cnpj
+        let name = req.body.name
+        let email = req.body.email
+        let password = req.body.password
+
+
     }
 }
 
