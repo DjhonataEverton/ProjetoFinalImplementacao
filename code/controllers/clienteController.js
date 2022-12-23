@@ -7,7 +7,7 @@ class clienteController {
         const json = { error: '', result: [] };
         try {
             const clientes = await clienteService.listarClientes;
-            console.log(clientes)
+            
             for (let i in clientes) {
                 json.result.push({
                     id_client: id_client[i],
