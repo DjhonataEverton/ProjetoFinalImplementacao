@@ -10,8 +10,9 @@ app.set('view engine', 'ejs')
 const routes = require('../code/routes/routes');
 
 app.use(bodyParser.json())
-app.use(cors());
+//app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
+//app.use(express.json)
 
 app.get('/', (req,res)=> {
     res.render('../views/home')
