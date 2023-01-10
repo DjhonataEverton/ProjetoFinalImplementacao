@@ -14,6 +14,14 @@ class clientController{
     const find = clientModel.find_client_by_CPF(CPF)
     return await find
   }
+  async updateClient(CPF,NAME,EMAIL,PASSWORD){
+    const update = clientModel.update_client(CPF,NAME,EMAIL,PASSWORD)
+    return await update
+  }
+  async deleteClient(CPF){
+    const deleteC = clientModel.delete_client(CPF)
+    return await deleteC
+  }
 }
 
 //module.exports = new clientController()
