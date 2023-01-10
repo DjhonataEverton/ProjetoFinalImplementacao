@@ -42,9 +42,9 @@ module.exports = new clientModel()
 
 //----------TESTES----------
 
-let cliente = new clientModel()
+//let cliente = new clientModel()
 
-console.log(cliente.list_clients())
+//console.log(cliente.list_clients())
 //console.log(cliente.find_client_by_CPF(123))
 //cliente.createClient(555444,"Pedro", "Pedro@gmail.com", "Pedro123")
 
