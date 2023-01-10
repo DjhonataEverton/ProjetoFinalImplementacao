@@ -35,6 +35,29 @@ class clientModel{
         await prisma.$disconnect
         return console.log(findCLient)
     }
+
+    async update_client(CPF, NAME, EMAIL, PASSWORD){
+        await prisma.$connect
+        const updateClient = await prisma.tb_client.update({
+            where: {
+                cpf_cnpj: CPF
+            },
+            data: {
+                name: NAME,
+                email: EMAIL,
+                password: PASSWORD
+            },
+        })
+    }
+
+    async delete_client(CPF){
+        await prisma.$connect
+        const deleteClient = await prisma.tb_client.delete({
+            where: {
+              cpf_cnpj: CPF,
+            },
+          })
+    }
 }
 
 
