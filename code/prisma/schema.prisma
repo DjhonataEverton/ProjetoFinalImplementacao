@@ -14,7 +14,7 @@ model tb_client {
   id_client  Int    @id @default(autoincrement())
   cpf_cnpj  Int    @unique @db.Int
   name      String @db.VarChar(50)
-  email     String @db.VarChar(75)
+  email     String @unique @db.VarChar(75)
   password  String @db.VarChar(45)
   orders    tb_order[]
   
@@ -34,7 +34,7 @@ model tb_commissionare {
   id_commissionare Int    @id @default(autoincrement())
   cpf              Int    @unique
   name             String @db.VarChar(75)
-  email            String @db.VarChar(75)
+  email            String @unique @db.VarChar(75)
   password         String @db.VarChar(45)
 }
 
