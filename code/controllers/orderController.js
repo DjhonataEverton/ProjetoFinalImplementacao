@@ -1,7 +1,7 @@
 const prisma = require("@prisma/client")
 const orderModel = require("../models/orderModel")
 
-class productController {
+class orderController {
     async listOrders() {
         const list = orderModel.list_orders()
         return await list
@@ -24,5 +24,4 @@ class productController {
     }
 }
 
-let produto = new productController()
 
