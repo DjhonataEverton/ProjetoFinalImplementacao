@@ -15,7 +15,7 @@ class productModel {
         const allProducts = await prisma.tb_products.findMany()
         await prisma.$disconnect
 
-        console.log(allProducts)
+        return (allProducts)
     }
 
     async create_product(ID, PRODUCT, PRICE, UNITY) {
@@ -29,10 +29,10 @@ class productModel {
             }
         })
         await prisma.$disconnect
-        return console.log(createProduct)
+        return (createProduct)
     }
 
-    async find_client_by_CPF(ID) {
+    async find_product(ID) {
         await prisma.$connect
         const findProduct = await prisma.tb_products.findUnique({
             where: {
@@ -40,10 +40,14 @@ class productModel {
             }
         })
         await prisma.$disconnect
-        return console.log(findProduct)
+        if(findProduct == null){
+            return "Produto não encontrado."
+        } 
+        
+        return (findProduct)
     }
 
-    async update_client(ID, PRODUCT, PRICE, UNITY) {
+    async update_product(ID, PRODUCT, PRICE, UNITY) {
         await prisma.$connect
         const updateProduct = await prisma.tb_products.update({
             where: {
@@ -56,10 +60,10 @@ class productModel {
             },
         })
         await prisma.$disconnect
-        return console.log(updateProduct)
+        return (updateProduct)
     }
 
-    async delete_client(ID) {
+    async delete_product(ID) {
         await prisma.$connect
         const deleteProduct = await prisma.tb_products.delete({
             where: {
@@ -67,9 +71,37 @@ class productModel {
             },
         })
         await prisma.$disconnect
-        return console.log(deleteProduct)
+        return (deleteProduct)
     }
 }
 
 
 module.exports = new productModel()
+
+// ----------TESTES----------
+
+// let produto = new productModel()
+
+// produto.list_products()
+//     .then(dados => console.log(dados))
+//     .catch(err => console.log('Erro: ', err))
+
+// produto.find_product(555)
+//     .then(dados => console.log(dados))
+//     .catch(err => console.log('Erro: ', err))
+
+// produto.delete_product(555)
+//     .then(dados => console.log("Dados deletados com sucesso.\n", dados))
+//     .catch(err => console.log('Erro: ', err))
+
+// produto.create_product(555, "Maçã", 5.0, "quilograma")
+//     .then(data => console.log(data))
+//     .catch(err => console.log(err))
+
+// produto.create_product(444,"Leite", 4, "litro")
+//     .then(data => console.log(data))
+//     .catch(err => console.log(err))
+
+// produto.update_product(444, 'Açai', 6, 'litro')
+//     .then(data => console.log(data))
+//     .catch(err => console.log(err))
