@@ -48,6 +48,8 @@ class clientModel{
                 password: PASSWORD
             },
         })
+        await prisma.$disconnect
+        return console.log(updateClient)
     }
 
     async delete_client(CPF){
@@ -57,6 +59,8 @@ class clientModel{
               cpf_cnpj: CPF,
             },
           })
+          await prisma.$disconnect
+          return console.log(deleteClient)
     }
 }
 
