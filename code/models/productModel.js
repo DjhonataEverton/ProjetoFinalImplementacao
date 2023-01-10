@@ -2,13 +2,6 @@ const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient()
 
-// model tb_products {
-//     id_products Int    @id @default(autoincrement())
-//     product     String @db.VarChar(45)
-//     price       Int 
-//     unity       String @db.Text
-//   }
-
 class productModel {
     async list_products() {
         await prisma.$connect()
@@ -40,10 +33,10 @@ class productModel {
             }
         })
         await prisma.$disconnect
-        if(findProduct == null){
+        if (findProduct == null) {
             return "Produto não encontrado."
-        } 
-        
+        }
+
         return (findProduct)
     }
 
