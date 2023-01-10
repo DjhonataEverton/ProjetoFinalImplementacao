@@ -11,11 +11,10 @@ class productModel {
         return (allProducts)
     }
 
-    async create_product(ID, PRODUCT, PRICE, UNITY) {
+    async create_product(PRODUCT, PRICE, UNITY) {
         await prisma.$connect
         const createProduct = await prisma.tb_products.create({
             data: {
-                id_products: ID,
                 product: PRODUCT,
                 price: PRICE,
                 unity: UNITY
@@ -91,7 +90,7 @@ module.exports = new productModel()
 //     .then(data => console.log(data))
 //     .catch(err => console.log(err))
 
-// produto.create_product(444,"Leite", 4, "litro")
+// produto.create_product("Leite", 4, "litro")
 //     .then(data => console.log(data))
 //     .catch(err => console.log(err))
 
