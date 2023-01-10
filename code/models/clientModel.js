@@ -8,7 +8,7 @@ class clientModel{
         const allClients = await prisma.tb_client.findMany()
         await prisma.$disconnect
         
-        console.log(allClients)
+        return(allClients)
     }
 
     async create_client(CPF, NAME, EMAIL,PASSWORD){
@@ -22,7 +22,7 @@ class clientModel{
             }
         })
         await prisma.$disconnect
-        return console.log(created)
+        return created
     }
 
     async find_client_by_CPF(CPF){
@@ -33,7 +33,7 @@ class clientModel{
             }
         })
         await prisma.$disconnect
-        return console.log(findCLient)
+        return findCLient
     }
 
     async update_client(CPF, NAME, EMAIL, PASSWORD){
@@ -49,7 +49,7 @@ class clientModel{
             },
         })
         await prisma.$disconnect
-        return console.log(updateClient)
+        return updateClient
     }
 
     async delete_client(CPF){
@@ -60,7 +60,7 @@ class clientModel{
             },
           })
           await prisma.$disconnect
-          return console.log(deleteClient)
+          return deleteClient
     }
 }
 
@@ -69,10 +69,30 @@ module.exports = new clientModel()
 
 //----------TESTES----------
 
-//let cliente = new clientModel()
+// let cliente = new clientModel()
 
-//console.log(cliente.list_clients())
-//console.log(cliente.find_client_by_CPF(123))
-//cliente.createClient(555444,"Pedro", "Pedro@gmail.com", "Pedro123")
+// cliente.list_clients()
+//     .then(dados => console.log(dados))
+//     .catch(err => console.log('Erro: ', err))
+
+// cliente.find_client_by_CPF(555444)
+//     .then(dados => console.log(dados))
+//     .catch(err => console.log('Erro: ', err))
+
+// cliente.delete_client(555444)
+//     .then(dados => console.log("Dados deletados com sucesso.\n", dados))
+//     .catch(err => console.log('Erro: ', err))
+
+// cliente.create_client(555,"Pedro", "Pedro@gmail.com", "Pedro123")
+//     .then(data => console.log(data))
+//     .catch(err => console.log(err))
+
+// cliente.create_client(444,"teste", "teste@teste.com", "teste")
+//     .then(data => console.log(data))
+//     .catch(err => console.log(err))
+
+// cliente.update_client(444, 'testeUpdate', 'update@update.com', 'update')
+//     .then(data => console.log(data))
+//     .catch(err => console.log(err))
 
 
