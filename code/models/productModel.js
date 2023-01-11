@@ -32,10 +32,7 @@ class productModel {
             }
         })
         await prisma.$disconnect
-        if (findProduct == null) {
-            return "Produto não encontrado."
-        }
-
+        
         return (findProduct)
     }
 
