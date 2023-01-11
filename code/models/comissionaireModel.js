@@ -52,11 +52,11 @@ class comissionaireModel {
         return createComissionaire
     }
 
-    async update_comissionaire(ID, CPF, NAME, EMAIL, PASSWORD) {
+    async update_comissionaire(CPF, NAME, EMAIL, PASSWORD) {
         await prisma.$connect
         const updateComissionaire = await prisma.tb_commissionare.update({
             where: {
-                id_commissionare: ID
+                cpf: CPF
             },
             data: {
                 cpf: CPF,
@@ -69,11 +69,11 @@ class comissionaireModel {
 
         return updateComissionaire
     }
-    async delete_comissionaire(ID) {
+    async delete_comissionaire(CPF) {
         await prisma.$connect
         const deleteComissionaire = await prisma.tb_commissionare.delete({
             where: {
-                id_commissionare: ID
+                id_commissionare: CPF
             }
         })
         await prisma.$disconnect

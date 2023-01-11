@@ -8,7 +8,7 @@ class clientModel{
         const allClients = await prisma.tb_client.findMany()
         await prisma.$disconnect
         
-        return(allClients)
+        return allClients
     }
 
     async create_client(CPF, NAME, EMAIL,PASSWORD){
@@ -76,8 +76,8 @@ module.exports = new clientModel()
 //     .catch(err => console.log('Erro: ', err))
 
 // cliente.find_client_by_CPF(555444)
-//     .then(dados => console.log(dados))
-//     .catch(err => console.log('Erro: ', err))
+//    .then(dados => console.log(dados))
+//    .catch(err => console.log('Erro: ', err))
 
 // cliente.delete_client(555444)
 //     .then(dados => console.log("Dados deletados com sucesso.\n", dados))

@@ -3,29 +3,32 @@ const clientModel = require("../models/clientModel")
 
 class clientController{
   async listClients(){
-    const list = clientModel.list_clients()
-    return await list
+    const List = clientModel.list_clients()
+    return await List
   }
   async createClient(CPF,NAME,EMAIL,PASSWORD){
-    const create = clientModel.create_client(CPF,NAME,EMAIL,PASSWORD)
-    return  await create
+    const Create = clientModel.create_client(CPF,NAME,EMAIL,PASSWORD)
+    return  await Create
   }
   async findByCPF(CPF){
-    const find = clientModel.find_client_by_CPF(CPF)
-    return await find
+    const Find = clientModel.find_client_by_CPF(CPF)
+    return await Find
   }
   async updateClient(CPF,NAME,EMAIL,PASSWORD){
-    const update = clientModel.update_client(CPF,NAME,EMAIL,PASSWORD)
-    return await update
+    const Update = clientModel.update_client(CPF,NAME,EMAIL,PASSWORD)
+    return await Update
   }
   async deleteClient(CPF){
-    const deleteC = clientModel.delete_client(CPF)
-    return await deleteC
+    const Delete = clientModel.delete_client(CPF)
+    return await Delete
   }
 }
 
-//module.exports = new clientController()
+module.exports = new clientController()
+
 let cliente = new clientController()
+
+//----------TESTES----------
 
 //console.log(cliente.listClients())
 //console.log(cliente.findByCPF(222111))
