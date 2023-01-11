@@ -11,11 +11,17 @@
 <body>
   <section class="homeBox">
     <header class="homeHeader">
-      <input class="headerButtons"type="button" value="ADM - LOGIN">
-      <input class="headerButtons"type="button" value="CLIENTE - LOGIN">
+      <form method="get" action="/login">
+        <input class="headerButtons"type="submit" value="ADM - LOGIN">
+      </form>
+      <form action="/login" method="get">
+        <input class="headerButtons"type="submit" value="CLIENTE - LOGIN">
+      </form>
     </header>
     <div class="homeBody">
-      <input id="orderButton" type="button" value="REALIZAR PEDIDO">
+      <form action="" method="get">
+        <input id="orderButton" type="button" value="REALIZAR PEDIDO">
+      </form>
     </div>
   </section>
 </main>
