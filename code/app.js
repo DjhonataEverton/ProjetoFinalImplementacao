@@ -16,7 +16,9 @@ app.get("/home", (req,res) =>{
 app.get("/login", (req,res) =>{
     res.render('login')
 })
-
+app.get("/cadastro", (req,res) =>{
+    res.render('cadastro')
+})
 app.get("/cliente", (req, res) =>{
     res.send(cliente.listClients())
 })

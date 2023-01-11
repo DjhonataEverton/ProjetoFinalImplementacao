@@ -4,26 +4,24 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
   <title>Login</title>
 </head>
 <body>
-  <main class="cadastro"> 
-    <section class="container_box">
-      <form method="post" action=" colocar rota correta">
-          <div class="txt_input">
-          <input type="email" name="email" id="email" placeholder="email">
-          <label for="email"></label>
-
-          <input type="password" name="senha" id="senha" placeholder="senha">
-          <label for="senha"></label>
-          </div>
-          
-          <div class="btn_input">
-            <input type="submit" value="Login" id="login">
-             <input type="button" value="Cadastrar" id="cadastrar" onclick="cadastrar()">
-          </div>
+  <section class="userLoginBox">
+    <div class="userLoginBody">
+      <form class="userLoginForm" action="teste" method="post">
+        <input type="text" name="userCPF", id="userCpf" placeholder=" CPF">
+        <br>
+        <input type="password" name="userPassword" id="userPass" placeholder=" Senha">
+        <br>
+        <input id="userLoginButton" type="submit" value="Login">
+        <br>
+        <a href="http://localhost:3000/cadastro">cadastre-se</a>
+        
       </form>
-    </main>  
+    </div>
+  </section>
 </section>
 </body>
 </html>
