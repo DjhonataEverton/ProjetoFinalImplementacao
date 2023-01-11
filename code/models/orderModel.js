@@ -31,10 +31,7 @@ class orderModel {
             }
         })
         await prisma.$disconnect
-        if(findOrder == null){
-            return "Order não encontrada."
-        }
-
+       
         return findOrder
     }
 
@@ -84,31 +81,3 @@ class orderModel {
 }
 
 module.exports = new orderModel()
-
-// ----------TESTES----------
-
-let order = new orderModel()
-
-// order.list_orders()
-//     .then(dados => console.log(dados))
-//     .catch(err => console.log('Erro: ', err))
-
-// order.find_order(4)
-//     .then(dados => console.log(dados))
-//     .catch(err => console.log('Erro: ', err))
-
-// order.delete_order(4)
-//     .then(dados => console.log("Dados deletados com sucesso.\n", dados))
-//     .catch(err => console.log('Erro: ', err))
-
-// order.create_order("Maçã", 4, "S", 1)
-//     .then(data => console.log(data))
-//     .catch(err => console.log(err))
-
-// order.create_order("Leite", 5, "N", 1)
-//     .then(data => console.log(data))
-//     .catch(err => console.log(err))
-
-// order.update_order(4, 'Açai', 6, 'S', 1)
-//     .then(data => console.log(data))
-//     .catch(err => console.log(err))
