@@ -27,16 +27,16 @@ class clientModel{
 
     async find_client_by_CPF(CPF){
         await prisma.$connect
-        const findCLient = await prisma.tb_client.findUnique({
+        const findClient = await prisma.tb_client.findUnique({
             where:{
                 cpf_cnpj: CPF
             }
         })
         await prisma.$disconnect
-        return findCLient
+        return findClient
     }
 
-    async update_client(CPF, NAME, EMAIL, PASSWORD){
+    async update_client_by_CPF(CPF, NAME, EMAIL, PASSWORD){
         await prisma.$connect
         const updateClient = await prisma.tb_client.update({
             where: {
@@ -52,7 +52,7 @@ class clientModel{
         return updateClient
     }
 
-    async delete_client(CPF){
+    async delete_client_by_CPF(CPF){
         await prisma.$connect
         const deleteClient = await prisma.tb_client.delete({
             where: {

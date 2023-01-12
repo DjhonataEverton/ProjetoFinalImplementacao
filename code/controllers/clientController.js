@@ -1,34 +1,52 @@
 const prisma = require("@prisma/client")
 const clientModel = require("../models/clientModel")
 
-class clientController{
-  async listClients(){
-    const List = clientModel.list_clients()
-    return await List
+class clientController {
+
+  async listClients(req, res) {
+    
+    const List = await clientModel.list_clients()
+    return res.json(List)
   }
-  async createClient(CPF,NAME,EMAIL,PASSWORD){
-    const Create = clientModel.create_client(CPF,NAME,EMAIL,PASSWORD)
-    return  await Create
+
+  async createClient(req, res) {
+
+    const CPF = req.body.cpf_cnpj
+    const NAME = req.body.name
+    const EMAIL = req.body.email
+    const PASSWORD = req.body.password
+    
+    const Create = await clientModel.create_client(CPF, NAME, EMAIL, PASSWORD)
+    return res.status(201).json(Create)
   }
-  async findByCPF(CPF){
-    const Find = clientModel.find_client_by_CPF(CPF)
-    return await Find
+
+  async findByCPF(req, res) {
+    const CPF = parseInt(req.params.cpf)
+
+    const Find = await clientModel.find_client_by_CPF(CPF)
+    if(Find === null){
+      return res.status(404).send('Cliente não encontrado')
+    }
+
+    return res.json(Find)
   }
-  async updateClient(CPF,NAME,EMAIL,PASSWORD){
-    const Update = clientModel.update_client(CPF,NAME,EMAIL,PASSWORD)
-    return await Update
+
+  async updateByCpf(req, res) {
+    const CPF = parseInt(req.params.cpf)
+    const NAME = req.body.name
+    const EMAIL = req.body.email
+    const PASSWORD = req.body.password
+
+    const Update = await clientModel.update_client_by_CPF(CPF, NAME, EMAIL, PASSWORD)
+    return res.json(Update)
   }
-  async deleteClient(CPF){
-    const Delete = clientModel.delete_client(CPF)
-    return await Delete
+
+  async deleteByCpf(req, res) {
+    const CPF = parseInt(req.params.cpf)
+
+    const Delete = await clientModel.delete_client_by_CPF(CPF)
+    return res.send(`Cliente de CPF '${CPF}' deletado.`)
   }
 }
 
 module.exports = new clientController()
-
-let cliente = new clientController()
-
-//----------TESTES----------
-
-//console.log(cliente.listClients())
-//console.log(cliente.findByCPF(222111))
