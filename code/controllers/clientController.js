@@ -20,51 +20,70 @@ class clientController {
     const EMAIL = req.body.email
     const PASSWORD = req.body.password
 
+    if (!CPF || !NAME || !EMAIL || !PASSWORD) {
+      return res.send('Preencha todos os campos!')
+    }
+
     const Create = await clientModel.create_client(CPF, NAME, EMAIL, PASSWORD)
     return res.status(201).json(Create)
 
   }
 
   async findByCPF(req, res) {
-    if(req.session.loggedin === true){
-      const CPF = parseInt(req.params.cpf)
-  
-      const Find = await clientModel.find_client_by_CPF(CPF)
-      if (Find === null) {
-        return res.status(404).send('Cliente não encontrado')
-      }
-  
-      return res.json(Find)
+    if (req.session.loggedin === false) {
+      return res.send('Você não está logado!')
+
     }
 
-    return res.send('Você não está logado!')
+    const CPF = parseInt(req.params.cpf)
+
+    const Find = await clientModel.find_client_by_CPF(CPF)
+    if (Find === null) {
+      return res.status(404).send('Cliente não encontrado')
+    }
+
+    return res.json(Find)
+
   }
 
   async updateByCpf(req, res) {
-    if (req.session.loggedin === true) {
-      const CPF = parseInt(req.params.cpf)
-      const NAME = req.body.name
-      const EMAIL = req.body.email
-      const PASSWORD = req.body.password
+    if (req.session.loggedin === false) {
+      return res.send('Você não está logado!')
+    }
+    
+    const CPF = parseInt(req.params.cpf)
+    const NAME = req.body.name
+    const EMAIL = req.body.email
+    const PASSWORD = req.body.password
 
-      const Update = await clientModel.update_client_by_CPF(CPF, NAME, EMAIL, PASSWORD)
-      return res.json(Update)
+    if (!CPF || !NAME || !EMAIL || !PASSWORD) {
+      return res.send('Preencha todos os campos.')
     }
 
-    return res.send('Você não está logado!')
+    try {
+      const Update = await clientModel.update_client_by_CPF(CPF, NAME, EMAIL, PASSWORD)
+      req.session.loggedin = false
+      return res.json(Update)
 
+    }catch(err){
+      return res.send('Usuário não encontrado')
+    }
   }
 
   async deleteByCpf(req, res) {
-    if (req.session.loggedin === true) {
-      const CPF = parseInt(req.params.cpf)
-
+    if (req.session.loggedin === false) {
+      return res.send('Você não está logado!')      
+    }
+    
+    const CPF = parseInt(req.params.cpf)
+    
+    try{
       await clientModel.delete_client_by_CPF(CPF)
       return res.send(`Cliente de CPF '${CPF}' deletado.`)
-
+      
+    }catch(err){
+      res.send('Usuário não encontrado!')
     }
-
-    return res.send('Você não está logado!')
   }
 
   async authenticate(req, res) {
