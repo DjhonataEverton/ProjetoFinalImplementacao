@@ -44,3 +44,10 @@ model tb_products {
   price       Int 
   unity       String @db.Text
 }
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt   DateTime
+}

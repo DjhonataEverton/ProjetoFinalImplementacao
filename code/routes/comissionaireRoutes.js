@@ -8,6 +8,7 @@ router.get('/:cpf', comissionaireController.findComissionaireByCPF)
 router.post('/add', comissionaireController.createComissionaire)
 router.put('/:id', comissionaireController.updateComissionaire)
 router.delete('/:cpf', comissionaireController.deleteComissionaire)
+router.post('/auth', comissionaireController.authenticate)
 
 module.exports = router
 

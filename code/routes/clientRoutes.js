@@ -8,6 +8,7 @@ router.get('/:cpf', clientController.findByCPF)
 router.post('/add', clientController.createClient)
 router.put('/:cpf', clientController.updateByCpf)
 router.delete('/:cpf', clientController.deleteByCpf)
+router.post('/auth', clientController.authenticate)
 
 module.exports = router
 
