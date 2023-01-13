@@ -63,12 +63,13 @@ class clientModel {
         return deleteClient
     }
 
-    async find_by_email_and_password(EMAIL, PASSWORD) {
+    async find_by_email_and_password(EMAIL, PASSWORD, CPF) {
         prisma.$connect
         const findClient = await prisma.tb_client.findFirst({
             where: {
                 email: EMAIL,
-                password: PASSWORD
+                password: PASSWORD,
+                cpf_cnpj: CPF
             }
         })
         prisma.$disconnect

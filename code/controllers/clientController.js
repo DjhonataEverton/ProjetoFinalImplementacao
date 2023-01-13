@@ -4,14 +4,13 @@ const clientModel = require("../models/clientModel")
 class clientController {
 
   async listClients(req, res) {
-    if (req.session.loggedin === true) {
-
-      const List = await clientModel.list_clients()
-      return res.json(List)
+    if (!req.session.comissionaireIn) {
+      return res.send('Página Restrita.')
 
     }
 
-    return res.send('Você não está logado!')
+    const result = await clientModel.list_clients()
+    return res.json(result)
   }
 
   async createClient(req, res) {
@@ -24,30 +23,35 @@ class clientController {
       return res.send('Preencha todos os campos!')
     }
 
-    const Create = await clientModel.create_client(CPF, NAME, EMAIL, PASSWORD)
-    return res.status(201).json(Create)
+    const result = await clientModel.create_client(CPF, NAME, EMAIL, PASSWORD)
+    return res.status(201).json(result)
 
   }
 
   async findByCPF(req, res) {
-    if (req.session.loggedin === false) {
+    if (!req.session.loggedin) {
       return res.send('Você não está logado!')
 
     }
 
     const CPF = parseInt(req.params.cpf)
 
-    const Find = await clientModel.find_client_by_CPF(CPF)
-    if (Find === null) {
+    
+    if (CPF != req.session.cpf) {
+      return res.send('Não é possível listar a conta de outro usuário')
+    }
+    
+    const result = await clientModel.find_client_by_CPF(CPF)
+    if (result === null) {
       return res.status(404).send('Cliente não encontrado')
     }
-
-    return res.json(Find)
-
+    
+    return res.json(result)
+    
   }
-
+  
   async updateByCpf(req, res) {
-    if (req.session.loggedin === false) {
+    if (!req.session.loggedin) {
       return res.send('Você não está logado!')
     }
     
@@ -55,60 +59,74 @@ class clientController {
     const NAME = req.body.name
     const EMAIL = req.body.email
     const PASSWORD = req.body.password
+    
+    if(CPF != req.session.cpf){
+      return res.send('Não é possivel atualizar a conta de outro usuário')
+    }
 
     if (!CPF || !NAME || !EMAIL || !PASSWORD) {
       return res.send('Preencha todos os campos.')
     }
 
     try {
-      const Update = await clientModel.update_client_by_CPF(CPF, NAME, EMAIL, PASSWORD)
+      const result = await clientModel.update_client_by_CPF(CPF, NAME, EMAIL, PASSWORD)
       req.session.loggedin = false
-      return res.json(Update)
+      return res.json(result)
 
-    }catch(err){
+    } catch (err) {
       return res.send('Usuário não encontrado')
     }
   }
 
   async deleteByCpf(req, res) {
-    if (req.session.loggedin === false) {
-      return res.send('Você não está logado!')      
+    if (!req.session.loggedin) {
+      return res.send('Você não está logado!')
     }
-    
+
     const CPF = parseInt(req.params.cpf)
-    
-    try{
-      await clientModel.delete_client_by_CPF(CPF)
-      return res.send(`Cliente de CPF '${CPF}' deletado.`)
-      
-    }catch(err){
-      res.send('Usuário não encontrado!')
+
+    if(CPF != req.session.cpf){
+      return res.send('Não é possivel deletar a conta de outro usuário')
     }
+
+      try {
+        await clientModel.delete_client_by_CPF(CPF)
+
+        req.session.loggedin = false
+        req.session.cpf = undefined
+
+        return res.send(`Cliente de CPF '${CPF}' deletado.`)
+
+      } catch (err) {
+        res.send('Usuário não encontrado!')
+      }
   }
 
   async authenticate(req, res) {
+    const CPF = req.body.cpf
     const EMAIL = req.body.email;
     const PASSWORD = req.body.password;
 
-    if (EMAIL && PASSWORD) {
-
-      const auth = await clientModel.find_by_email_and_password(EMAIL, PASSWORD)
-
-      if (auth) {
-        req.session.loggedin = true
-
-        res.redirect()
-      } else {
-        res.send('Credenciais incorretas')
-      }
-
-    } else {
+    if (!EMAIL || !PASSWORD || !CPF) {
       res.send('Digite todas as credenciais.')
-    }
-  }
 
-  showPage(req,res) {
-    res.render('login')
+    }
+
+    if(typeof CPF === 'string'){
+      return res.send('CPF deve ser valor numérico')
+    }
+
+    const auth = await clientModel.find_by_email_and_password(EMAIL, PASSWORD, CPF)
+
+    if (auth) {
+      req.session.loggedin = true
+      req.session.cpf = CPF
+
+      res.send('Usuario logado com sucesso')
+    } else {
+      res.send('Credenciais incorretas')
+    }
+
   }
 
 }
