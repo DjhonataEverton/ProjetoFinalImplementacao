@@ -97,7 +97,7 @@ class clientController {
       if (auth) {
         req.session.loggedin = true
 
-        res.redirect('/')
+        res.redirect()
       } else {
         res.send('Credenciais incorretas')
       }
@@ -105,6 +105,10 @@ class clientController {
     } else {
       res.send('Digite todas as credenciais.')
     }
+  }
+
+  showPage(req,res) {
+    res.render('login')
   }
 
 }
