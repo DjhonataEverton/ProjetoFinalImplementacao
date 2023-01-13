@@ -3,43 +3,47 @@ const comissionaireModel = require("../models/comissionaireModel")
 
 class comissionaireController {
     async listComissionaires(req, res) {
-        if (req.session.comissionaireIn) {
-            const list = await comissionaireModel.list_comissionaires()
-            return res.json(list)
+        if (!req.session.comissionaireIn) {
+            return res.send('Usuário não logado.')
         }
-
-        return res.send('Usuário não logado.')
+        
+        const list = await comissionaireModel.list_comissionaires()
+        return res.json(list)
     }
 
     async createComissionaire(req, res) {
-        const CPF = req.body.cpf
-        const NAME = req.body.name
-        const EMAIL = req.body.email
-        const PASSWORD = req.body.password
-
-        if (CPF && NAME && EMAIL && PASSWORD) {
+        if(!req.session.comissionaireIn){
+            res.send('Necessário privilégios superiores')
+            
+        }else{
+            const CPF = req.body.cpf
+            const NAME = req.body.name
+            const EMAIL = req.body.email
+            const PASSWORD = req.body.password
+    
+            if (!CPF || !NAME|| !EMAIL || !PASSWORD) {
+                return res.send(`Preencha todos os campos!`)
+            }
+            
             const create = await comissionaireModel.create_comissionaire(CPF, NAME, EMAIL, PASSWORD)
             return res.json(create)
         }
-
-        return res.send(`Preencha todos os campos: [${CPF}, ${NAME}, ${EMAIL}, ${PASSWORD}] !!`)
     }
 
     async findComissionaireByCPF(req, res) {
-        if (req.session.comissionaireIn) {
-            const CPF = parseInt(req.params.cpf)
+        if (!req.session.comissionaireIn) {
+            return res.send('Usuário não logado.')
+            
+        }
+        const CPF = parseInt(req.params.cpf)
 
-            const find = await comissionaireModel.find_comissionaire_by_cpf(CPF)
+        const find = await comissionaireModel.find_comissionaire_by_cpf(CPF)
 
-            if (find === null) {
-                return res.status(404).send('Comissionário não encontrado.')
-            }
-
-            return res.json(find)
-
+        if (find === null) {
+            return res.status(404).send('Comissionário não encontrado.')
         }
 
-        return res.send('Usuário não logado.')
+        return res.json(find)
     }
 
     async updateComissionaire(req, res) {
@@ -48,7 +52,7 @@ class comissionaireController {
         }
 
         const ID = parseInt(req.params.id)
-        const CPF = parseInt(req.body.cpf)
+        const CPF = req.body.cpf
         const NAME = req.body.name
         const EMAIL = req.body.email
         const PASSWORD = req.body.password

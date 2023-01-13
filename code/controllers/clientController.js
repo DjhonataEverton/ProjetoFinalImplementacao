@@ -36,31 +36,32 @@ class clientController {
 
     const CPF = parseInt(req.params.cpf)
 
-    
+
     if (CPF != req.session.cpf) {
       return res.send('Não é possível listar a conta de outro usuário')
     }
-    
+
     const result = await clientModel.find_client_by_CPF(CPF)
     if (result === null) {
       return res.status(404).send('Cliente não encontrado')
     }
-    
+
     return res.json(result)
-    
+
   }
-  
+
   async updateByCpf(req, res) {
+
     if (!req.session.loggedin) {
       return res.send('Você não está logado!')
     }
-    
+
     const CPF = parseInt(req.params.cpf)
     const NAME = req.body.name
     const EMAIL = req.body.email
     const PASSWORD = req.body.password
-    
-    if(CPF != req.session.cpf){
+
+    if (CPF != req.session.cpf) {
       return res.send('Não é possivel atualizar a conta de outro usuário')
     }
 
@@ -76,6 +77,7 @@ class clientController {
     } catch (err) {
       return res.send('Usuário não encontrado')
     }
+
   }
 
   async deleteByCpf(req, res) {
@@ -85,21 +87,21 @@ class clientController {
 
     const CPF = parseInt(req.params.cpf)
 
-    if(CPF != req.session.cpf){
+    if (CPF != req.session.cpf) {
       return res.send('Não é possivel deletar a conta de outro usuário')
     }
 
-      try {
-        await clientModel.delete_client_by_CPF(CPF)
+    try {
+      await clientModel.delete_client_by_CPF(CPF)
 
-        req.session.loggedin = false
-        req.session.cpf = undefined
+      req.session.loggedin = false
+      req.session.cpf = undefined
 
-        return res.send(`Cliente de CPF '${CPF}' deletado.`)
+      return res.send(`Cliente de CPF '${CPF}' deletado.`)
 
-      } catch (err) {
-        res.send('Usuário não encontrado!')
-      }
+    } catch (err) {
+      res.send('Usuário não encontrado!')
+    }
   }
 
   async authenticate(req, res) {
@@ -112,7 +114,7 @@ class clientController {
 
     }
 
-    if(typeof CPF === 'string'){
+    if (typeof CPF === 'string') {
       return res.send('CPF deve ser valor numérico')
     }
 
@@ -130,5 +132,6 @@ class clientController {
   }
 
 }
+
 
 module.exports = new clientController()
