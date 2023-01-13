@@ -10,6 +10,7 @@ class productController {
         const result = await productModel.list_products()
         return res.json(result)
     }
+    
     async createProduct(req, res) {
         if(!req.session.comissionaireIn){
             return res.send('Accesso Restrito')
@@ -30,6 +31,7 @@ class productController {
         const result = await productModel.create_product(PRODUCT, PRICE, UNITY)
         return res.json(result)
     }
+
     async findProductByID(req, res) {
         if(!req.session.comissionaireIn){
             return res.send('Accesso Restrito')
@@ -44,6 +46,7 @@ class productController {
 
         return res.json(find)
     }
+
     async updateProduct(req, res) {
         if(!req.session.comissionaireIn){
             return res.send('Accesso Restrito')
@@ -70,6 +73,7 @@ class productController {
         const result = await productModel.update_product(ID, PRODUCT, PRICE, UNITY)
         return res.json(result)
     }
+
     async deleteProduct(req, res) {
         if(!req.session.comissionaireIn){
             return res.send('Accesso Restrito')
