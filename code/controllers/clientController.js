@@ -4,14 +4,13 @@ const clientModel = require("../models/clientModel")
 class clientController {
 
   async listClients(req, res) {
-    if (req.session.loggedin === true) {
-
-      const List = await clientModel.list_clients()
-      return res.json(List)
-
+    if (!req.session.loggedin) {
+      return res.send('Você não está logado!')
+    
     }
-
-    return res.send('Você não está logado!')
+    
+    const List = await clientModel.list_clients()
+    return res.json(List)
   }
 
   async createClient(req, res) {
@@ -30,7 +29,7 @@ class clientController {
   }
 
   async findByCPF(req, res) {
-    if (req.session.loggedin === false) {
+    if (!req.session.loggedin) {
       return res.send('Você não está logado!')
 
     }
@@ -47,7 +46,7 @@ class clientController {
   }
 
   async updateByCpf(req, res) {
-    if (req.session.loggedin === false) {
+    if (!req.session.loggedin) {
       return res.send('Você não está logado!')
     }
     
@@ -71,7 +70,7 @@ class clientController {
   }
 
   async deleteByCpf(req, res) {
-    if (req.session.loggedin === false) {
+    if (!req.session.loggedin) {
       return res.send('Você não está logado!')      
     }
     
