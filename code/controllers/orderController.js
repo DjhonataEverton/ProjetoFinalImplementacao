@@ -17,8 +17,6 @@ class orderController {
             return res.send('Usuário nao logado!')
         }
 
-        console.log(req.session)
-
         const PRODUCT = req.body.product
         const QUANTITY = req.body.quantity
         const ACCEPT = 'N'
@@ -53,9 +51,6 @@ class orderController {
     }
 
     async deleteOrder(req, res) {
-
-        console.log(req.session)
-
         if(!req.session.clientId){
             return res.send('Usuário não logado.')
         }

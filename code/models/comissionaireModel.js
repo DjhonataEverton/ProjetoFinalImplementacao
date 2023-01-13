@@ -24,6 +24,18 @@ class comissionaireModel {
         return findComissionaire
     }
 
+    async find_comissionaire_by_id(ID) {
+        prisma.$connect
+        const findComissionaire = await prisma.tb_commissionare.findUnique({
+            where: {
+                id_commissionare: ID
+            }
+        })
+        prisma.$disconnect
+
+        return findComissionaire
+    }
+
     async create_comissionaire(CPF, NAME, EMAIL, PASSWORD) {
         prisma.$connect
         const createComissionaire = await prisma.tb_commissionare.create({
