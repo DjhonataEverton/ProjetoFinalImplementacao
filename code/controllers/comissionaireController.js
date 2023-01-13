@@ -106,7 +106,7 @@ class comissionaireController {
         req.session.comissionaireIn = true
         req.session.comissionaireCPF = CPF
 
-        return res.redirect('/')
+        return res.send('Funcionário logado com sucesso.')
     }
 }
 
