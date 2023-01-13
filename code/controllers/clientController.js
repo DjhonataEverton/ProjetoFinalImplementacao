@@ -111,28 +111,28 @@ class clientController {
 
     if (!EMAIL || !PASSWORD || !CPF) {
       res.send('Digite todas as credenciais.')
-
     }
 
     if (typeof CPF === 'string') {
       return res.send('CPF deve ser valor numérico')
     }
 
-    const auth = await clientModel.find_by_email_and_password(EMAIL, PASSWORD, CPF)
+    const AUTH = await clientModel.find_by_email_and_password(EMAIL, PASSWORD, CPF)
+    console.log(AUTH)
 
-    if (auth) {
-      req.session.loggedin = true
-      req.session.cpf = CPF
-      req.session.clientId = auth.id_client
-
-      res.send('Usuario logado com sucesso')
-    } else {
-      res.send('Credenciais incorretas')
+    if (AUTH === null) {
+      return res.send('Credenciais incorretas')
     }
 
+    req.session.loggedin = true
+    req.session.cpf = CPF
+    req.session.clientId = AUTH.id_client
+    req.session.comissionaireIn = undefined
+    req.session.comissionaireId = undefined
+
+    return res.send('Usuario logado com sucesso')
   }
 
 }
-
 
 module.exports = new clientController()

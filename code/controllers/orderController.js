@@ -3,8 +3,7 @@ const orderModel = require("../models/orderModel")
 
 class orderController {
     async listOrders(req, res) {
-
-        if(!req.session.comissionaireIn){
+        if (!req.session.comissionaireIn) {
             return res.send('Acesso Restrito')
         }
 
@@ -13,7 +12,7 @@ class orderController {
     }
 
     async createOrder(req, res) {
-        if(!req.session.loggedin){
+        if (!req.session.loggedin) {
             return res.send('Usuário nao logado!')
         }
 
@@ -22,7 +21,7 @@ class orderController {
         const ACCEPT = 'N'
         const ID_CLIENT = req.session.clientId
 
-        if(!PRODUCT || !QUANTITY ){
+        if (!PRODUCT || !QUANTITY) {
             return res.send('Preencha todos os campos.')
         }
 
@@ -31,19 +30,19 @@ class orderController {
     }
 
     async findOrderById(req, res) {
-        if(!req.session.loggedin){
+        if (!req.session.loggedin || !req.session.comissionaireIn) {
             return res.send('Usuário não logado')
         }
 
         const ID = parseInt(req.params.id)
-        
+
         const result = await orderModel.find_order(ID)
 
-        if(result === null){
+        if (result === null) {
             return res.status(404).send('Order não existente')
         }
 
-        if(result.id_client != req.session.clientId){
+        if (result.id_client != req.session.clientId) {
             return res.send('Cada cliente só pode ver seus próprios pedidos')
         }
 
@@ -51,23 +50,42 @@ class orderController {
     }
 
     async deleteOrder(req, res) {
-        if(!req.session.clientId){
+        if (!req.session.clientId) {
             return res.send('Usuário não logado.')
         }
 
         const ID = parseInt(req.params.id)
         const result = await orderModel.find_order(ID)
 
-        if(result === null){
+        if (result === null) {
             return res.send('Order não existente.')
         }
-        
-        if(result.id_client != req.session.clientId){
+
+        if (result.id_client != req.session.clientId) {
             return res.send('Cada cliente só pode remover apenas seus próprios pedidos.')
         }
 
         await orderModel.delete_order(ID)
         return res.send(`Order de ID '${ID}' deletada.`)
+    }
+
+    async aproveOrder(req, res) {
+        if (!req.session.comissionaireIn) {
+            return res.send('Acesso Restrito')
+        }
+
+        const ID = parseInt(req.params.id)
+
+        const find = await orderModel.find_order(ID)
+        if (find === null) {
+            return res.send('Order não existente.')
+        }
+
+        let ACCEPT = find.accept
+        ACCEPT == 'N' ? ACCEPT = 'S' : ACCEPT = 'N'
+
+        const result = await orderModel.approve(ID, ACCEPT)
+        res.send(result)
     }
 }
 

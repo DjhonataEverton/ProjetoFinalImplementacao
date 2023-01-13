@@ -24,13 +24,13 @@ class orderModel {
     }
 
     async find_order(ID) {
-        await prisma.$connect
+        prisma.$connect
         const findOrder = await prisma.tb_order.findUnique({
             where: {
                 id_order: ID
             }
         })
-        await prisma.$disconnect
+        prisma.$disconnect
        
         return findOrder
     }
@@ -77,6 +77,20 @@ class orderModel {
         })
         await prisma.$disconnect
         return deleteOrder
+    }
+
+    async approve(ID, ACCEPT){
+        prisma.$connect
+        const approveOrder = await prisma.tb_order.update({
+            where: {
+                id_order: ID
+            },
+            data:{
+                accept: ACCEPT
+            }
+        })
+        prisma.$disconnect
+        return approveOrder
     }
 }
 

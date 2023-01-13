@@ -106,14 +106,15 @@ class comissionaireController {
         return res.send(`Funcionário de CPF '${CPF}' deletado.`)
     }
 
+    
     async authenticate(req, res) {
-        if (!req.body.email || !req.body.password) {
-            return res.send('Preencha todos os dados.')
-        }
-
         const EMAIL = req.body.email
         const PASSWORD = req.body.password
         const CPF = parseInt(req.body.cpf)
+        
+        if (!EMAIL || !PASSWORD || !CPF) {
+            return res.send('Preencha todos os dados.')
+        }
 
         const AUTH = await comissionaireModel.auth(EMAIL, PASSWORD, CPF)
 
@@ -123,6 +124,9 @@ class comissionaireController {
 
         req.session.comissionaireIn = true
         req.session.comissionaireId = AUTH.id_commissionare
+        req.session.loggedin = undefined
+        req.session.cpf = undefined
+        req.session.clientId = undefined
 
         return res.send('Funcionário logado com sucesso.')
     }
