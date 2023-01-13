@@ -4,44 +4,72 @@ const orderModel = require("../models/orderModel")
 class orderController {
     async listOrders(req, res) {
 
-        const list = await orderModel.list_orders()
-        return res.json(list)
+        if(!req.session.comissionaireIn){
+            return res.send('Acesso Restrito')
+        }
+
+        const result = await orderModel.list_orders()
+        return res.json(result)
     }
 
     async createOrder(req, res) {
+        if(!req.session.loggedin){
+            return res.send('Usuário nao logado!')
+        }
+
+        console.log(req.session)
+
         const PRODUCT = req.body.product
         const QUANTITY = req.body.quantity
-        const ACCEPT = req.body.accept
-        const ID_CLIENT = req.body.id_client
+        const ACCEPT = 'N'
+        const ID_CLIENT = req.session.clientId
 
-        const create = await orderModel.create_order(PRODUCT, QUANTITY, ACCEPT, ID_CLIENT)
-        return res.json(create)
+        if(!PRODUCT || !QUANTITY ){
+            return res.send('Preencha todos os campos.')
+        }
+
+        const result = await orderModel.create_order(PRODUCT, QUANTITY, ACCEPT, ID_CLIENT)
+        return res.json(result)
     }
 
     async findOrderById(req, res) {
-        const ID = parseInt(req.params.id)
-
-        const find = await orderModel.find_order(ID)
-
-        if(find === null){
-            return res.status(404).send('Order não encontrada')
+        if(!req.session.loggedin){
+            return res.send('Usuário não logado')
         }
-        return res.json(find)
-    }
 
-    async updateOrder(req, res) {
         const ID = parseInt(req.params.id)
-        const PRODUCT = req.body.product
-        const QUANTITY = req.body.quantity
-        const ACCEPT = req.body.accept
-        const ID_CLIENT = req.body.id_client
+        
+        const result = await orderModel.find_order(ID)
 
-        const update = await orderModel.update_order(ID, PRODUCT, QUANTITY, ACCEPT, ID_CLIENT)
-        return res.json(update)
+        if(result === null){
+            return res.status(404).send('Order não existente')
+        }
+
+        if(result.id_client != req.session.clientId){
+            return res.send('Cada cliente só pode ver seus próprios pedidos')
+        }
+
+        return res.json(result)
     }
 
     async deleteOrder(req, res) {
+
+        console.log(req.session)
+
+        if(!req.session.clientId){
+            return res.send('Usuário não logado.')
+        }
+
         const ID = parseInt(req.params.id)
+        const result = await orderModel.find_order(ID)
+
+        if(result === null){
+            return res.send('Order não existente.')
+        }
+        
+        if(result.id_client != req.session.clientId){
+            return res.send('Cada cliente só pode remover apenas seus próprios pedidos.')
+        }
 
         await orderModel.delete_order(ID)
         return res.send(`Order de ID '${ID}' deletada.`)

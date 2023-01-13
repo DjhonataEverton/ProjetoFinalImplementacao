@@ -95,15 +95,16 @@ class comissionaireController {
 
         const EMAIL = req.body.email
         const PASSWORD = req.body.password
+        const CPF = parseInt(req.body.cpf)
 
-        const AUTH = await comissionaireModel.auth(EMAIL, PASSWORD)
+        const AUTH = await comissionaireModel.auth(EMAIL, PASSWORD, CPF)
 
         if (AUTH === null) {
             return res.send('Credenciais incorretas.')
         }
 
         req.session.comissionaireIn = true
-        req.session.comissionaireName = AUTH.name
+        req.session.comissionaireCPF = CPF
 
         return res.redirect('/')
     }

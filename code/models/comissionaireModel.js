@@ -68,12 +68,13 @@ class comissionaireModel {
         return deleteComissionaire
     }
 
-    async auth(EMAIL, PASSWORD){
+    async auth(EMAIL, PASSWORD, CPF){
         prisma.$connect
         const result = await prisma.tb_commissionare.findFirst({
             where:{
                 email: EMAIL,
-                password: PASSWORD
+                password: PASSWORD,
+                cpf: CPF
             }
         })
         prisma.$disconnect

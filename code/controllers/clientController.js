@@ -123,6 +123,7 @@ class clientController {
     if (auth) {
       req.session.loggedin = true
       req.session.cpf = CPF
+      req.session.clientId = auth.id_client
 
       res.send('Usuario logado com sucesso')
     } else {
