@@ -41,12 +41,8 @@ app.use('/comissionaires', comissionaireRoutes)
 
 app.get('/', (req, res) => {
     console.log(req.session)
-    return res.send("<h1>Teste</h1>")
+    return res.send("<h1>página teste</h1>")
 })
-app.get('/teste', (req, res) =>{
-    res.render
-})
-
 app.listen(3000, () => {
     console.log(`Servidor iniciado em http://localhost:3000`)
 })

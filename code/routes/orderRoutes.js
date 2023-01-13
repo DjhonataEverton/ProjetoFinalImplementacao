@@ -1,3 +1,6 @@
+/**
+ * Arquivo que comtem as todas relacionadas aos pedidos
+ */
 const express = require('express')
 const router = express.Router()
 

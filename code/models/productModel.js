@@ -1,8 +1,14 @@
 const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient()
-
+/**
+ * @class classe responsável por guardar os metodos dos modelos de acesso ao banco de dados dos produtos
+ */
 class productModel {
+    /**
+     * 
+     * @returns retorna em uma variável todos os prdutos que existem no banco de dados
+     */
     async list_products() {
         await prisma.$connect()
         const allProducts = await prisma.tb_products.findMany()
@@ -10,7 +16,13 @@ class productModel {
 
         return (allProducts)
     }
-
+    /**
+     * 
+     * @param {String} PRODUCT recebe o nome do produto a ser inserido
+     * @param {String} QUANTITY recebe a quantidade de produto que tem no estoque
+     * @param {String} UNITY recebe qual a unidade do produto (Litro, quilograma)
+     * @returns retorna o metodo de criação de produtos
+     */
     async create_product(PRODUCT, PRICE, UNITY) {
         await prisma.$connect
         const createProduct = await prisma.tb_products.create({
@@ -23,7 +35,11 @@ class productModel {
         await prisma.$disconnect
         return (createProduct)
     }
-
+    /**
+     * 
+     * @param {Int} ID recebe o ID do produto que deseja encontrar
+     * @returns retorna o metodo de encontrar pelo ID
+     */
     async find_product(ID) {
         await prisma.$connect
         const findProduct = await prisma.tb_products.findUnique({
@@ -35,7 +51,14 @@ class productModel {
         
         return (findProduct)
     }
-
+    /**
+     * 
+     * @param {Int} ID recebe o id do produto a ser atualizado
+     * @param {String} PRODUCT recebe o novo novo do produto
+     * @param {String} PRICE recebe o valor do produto
+     * @param {String} UNITY recebe a nova unidade do produto
+     * @returns retorna o metodo de atualização do produto
+     */
     async update_product(ID, PRODUCT, PRICE, UNITY) {
         await prisma.$connect
         const updateProduct = await prisma.tb_products.update({
@@ -51,7 +74,11 @@ class productModel {
         await prisma.$disconnect
         return (updateProduct)
     }
-
+    /**
+     * 
+     * @param {Int} ID recebe o ID do produto que deseja deletar
+     * @returns retorna o metodo de deletar produtos
+     */
     async delete_product(ID) {
         await prisma.$connect
         const deleteProduct = await prisma.tb_products.delete({

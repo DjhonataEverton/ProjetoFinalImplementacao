@@ -1,7 +1,17 @@
 const prisma = require("@prisma/client")
 const orderModel = require("../models/orderModel")
 
+
+/**
+ * @class classe responsável por guardar os metodos de tratamento das requisições e respostas dos pedidos
+ */
 class orderController {
+    /**
+   * 
+   * @param {function} req realiza a requisição da sessão de login do usuario
+   * @param {funciton} res responde com um json os resultados
+   * @returns retorna um json com todos os dados vindos do banco de dados 
+   */
     async listOrders(req, res) {
         if (!req.session.comissionaireIn) {
             return res.send('Acesso Restrito')
@@ -28,7 +38,12 @@ class orderController {
         const result = await orderModel.create_order(PRODUCT, QUANTITY, ACCEPT, ID_CLIENT)
         return res.json(result)
     }
-
+    /**
+   * 
+   * @param {function} req realiza a requisição da sessão de login do usuario
+   * @param {funciton} res responde com um json os resultados
+   * @returns retorna um json com o pedido relacionado ao ID inserido
+   */
     async findOrderById(req, res) {
         if (!req.session.loggedin || !req.session.comissionaireIn) {
             return res.send('Usuário não logado')
@@ -48,7 +63,12 @@ class orderController {
 
         return res.json(result)
     }
-
+    /**
+   * 
+   * @param {function} req realiza a requisição da sessão de login do usuario
+   * @param {funciton} res responde com um json os resultados
+   * @returns retorna a confirmação de que foi deletado se o id que foi inserido está no banco de dados
+   */
     async deleteOrder(req, res) {
         if (!req.session.clientId) {
             return res.send('Usuário não logado.')
@@ -69,6 +89,12 @@ class orderController {
         return res.send(`Order de ID '${ID}' deletada.`)
     }
 
+    /**
+   * 
+   * @param {function} req realiza a requisição da sessão de login do usuario
+   * @param {funciton} res responde com um json os resultados
+   * @return vai retornar o resultado da aprovação ou não do pedido
+   */
     async aproveOrder(req, res) {
         if (!req.session.comissionaireIn) {
             return res.send('Acesso Restrito')

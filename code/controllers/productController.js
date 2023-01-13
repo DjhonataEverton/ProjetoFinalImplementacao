@@ -1,7 +1,18 @@
 const prisma = require("@prisma/client")
 const productModel = require("../models/productModel")
 
+
+/**
+ * @class classe responsável por guardar os metodos de tratamento das requisições e respostas dos produtos
+ */
+
 class productController {
+    /**
+   * 
+   * @param {function} req realiza a requisição da sessão de login do usuario
+   * @param {funciton} res responde com um json os resultados
+   * @returns retorna um json com todos os produtos que estão no banco de dados
+   */
     async listProducts(req, res) {
         if(!req.session.comissionaireIn){
             return res.send('Accesso Restrito')
@@ -10,7 +21,12 @@ class productController {
         const result = await productModel.list_products()
         return res.json(result)
     }
-    
+    /**
+   * 
+   * @param {function} req realiza a requisição da sessão de login do usuario
+   * @param {funciton} res responde com um json os resultados
+   * @returns retorna um jsom com o produto cadastado
+   */
     async createProduct(req, res) {
         if(!req.session.comissionaireIn){
             return res.send('Accesso Restrito')
@@ -31,7 +47,12 @@ class productController {
         const result = await productModel.create_product(PRODUCT, PRICE, UNITY)
         return res.json(result)
     }
-
+    /**
+   * 
+   * @param {function} req realiza a requisição da sessão de login do usuario
+   * @param {funciton} res responde com um json os resultados
+   * @returns retorna um json com o produto que está relacionado ao ID inserido
+   */
     async findProductByID(req, res) {
         if(!req.session.comissionaireIn){
             return res.send('Accesso Restrito')
@@ -46,7 +67,12 @@ class productController {
 
         return res.json(find)
     }
-
+    /**
+   * 
+   * @param {function} req realiza a requisição da sessão de login do usuario
+   * @param {funciton} res responde com um json os resultados
+   * @returns retorna um json com o produto atualizado
+   */
     async updateProduct(req, res) {
         if(!req.session.comissionaireIn){
             return res.send('Accesso Restrito')
@@ -73,7 +99,12 @@ class productController {
         const result = await productModel.update_product(ID, PRODUCT, PRICE, UNITY)
         return res.json(result)
     }
-
+    /**
+   * 
+   * @param {function} req realiza a requisição da sessão de login do usuario
+   * @param {funciton} res responde com um json os resultados
+   * @returns retorna a confirmação de que foi deletado o produto relacionado ao ID inseridos
+   */
     async deleteProduct(req, res) {
         if(!req.session.comissionaireIn){
             return res.send('Accesso Restrito')

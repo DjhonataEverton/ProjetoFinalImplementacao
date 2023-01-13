@@ -1,7 +1,16 @@
 const prisma = require("@prisma/client")
 const comissionaireModel = require("../models/comissionaireModel")
 
+/**
+ * @class classe responsável por guardar os metodos de tratamento das requisições e respostas dos funcionarios
+ */
 class comissionaireController {
+    /**
+     * 
+     * @param {function} req realiza a requisição da sessão de login do usuario
+     * @param {funciton} res responde com um json os resultados
+     * @returns retorna o json com os dados vindos do banco de dados
+    */
     async listComissionaires(req, res) {
         if (!req.session.comissionaireIn) {
             return res.send('Funcionário não logado.')
@@ -10,7 +19,12 @@ class comissionaireController {
         const list = await comissionaireModel.list_comissionaires()
         return res.json(list)
     }
-
+     /**
+     * 
+     * @param {function} req realiza a requisição da sessão de login do usuario
+     * @param {funciton} res responde com um json os resultados
+     * @returns retorna um json com os dados do funcionario cadastrado
+     */
     async createComissionaire(req, res) {
         if (!req.session.comissionaireIn) {
             res.send('Funcionário não logado.')
@@ -33,7 +47,12 @@ class comissionaireController {
             return res.json(create)
         }
     }
-
+    /**
+   * 
+   * @param {function} req realiza a requisição da sessão de login do usuario
+   * @param {funciton} res responde com um json os resultados
+   * @returns retorna um json com o funcionario relacioado ao cpf inserido
+   */
     async findComissionaireByCPF(req, res) {
         if (!req.session.comissionaireIn) {
             return res.send('Funcionário não logado.')
@@ -49,7 +68,12 @@ class comissionaireController {
 
         return res.json(find)
     }
-
+    /**
+   * 
+   * @param {function} req realiza a requisição da sessão de login do usuario
+   * @param {funciton} res responde com um json os resultados
+   * @returns retorna um json com os dados atualizados do funcionario
+   */
     async updateComissionaire(req, res) {
         if (!req.session.comissionaireIn) {
             return res.send('Funcionário não logado.')
@@ -85,7 +109,12 @@ class comissionaireController {
 
         return res.json(update)
     }
-
+    /**
+   * 
+   * @param {function} req realiza a requisição da sessão de login do usuario
+   * @param {funciton} res responde com um json os resultados
+   * @returns retorna a confirmação do funcionario deletado, se o cpf inserido existir no banco de dados
+   */
     async deleteComissionaire(req, res) {
         if (!req.session.comissionaireIn) {
             return res.send('Funcionário não logado.')
@@ -106,7 +135,11 @@ class comissionaireController {
         return res.send(`Funcionário de CPF '${CPF}' deletado.`)
     }
 
-    
+    /**
+   * @param {function} req realiza a requisião dos dados do usuario pra efetuar o login
+   * @param {funciton} res responde com um json os resultados
+   * @returns retorna a verificação de login do funcionario, se existir no banco, ele loga.
+   */
     async authenticate(req, res) {
         const EMAIL = req.body.email
         const PASSWORD = req.body.password
