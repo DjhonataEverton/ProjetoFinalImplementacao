@@ -12,22 +12,22 @@ class comissionaireController {
      * @returns retorna o json com os dados vindos do banco de dados
     */
     async listComissionaires(req, res) {
-        if (!req.session.comissionaireIn) {
-            return res.send('Funcionário não logado.')
+        if (!req.session.comissionaireId) {
+            return res.status(401).send('Funcionário não logado.')
         }
 
-        const list = await comissionaireModel.list_comissionaires()
-        return res.json(list)
+        const result = await comissionaireModel.list_comissionaires()
+        return res.json(result)
     }
-     /**
-     * 
-     * @param {function} req realiza a requisição da sessão de login do usuario
-     * @param {funciton} res responde com um json os resultados
-     * @returns retorna um json com os dados do funcionario cadastrado
-     */
+    /**
+    * 
+    * @param {function} req realiza a requisição da sessão de login do usuario
+    * @param {funciton} res responde com um json os resultados
+    * @returns retorna um json com os dados do funcionario cadastrado
+    */
     async createComissionaire(req, res) {
-        if (!req.session.comissionaireIn) {
-            res.send('Funcionário não logado.')
+        if (!req.session.comissionaireId) {
+            return res.status(401).send('Funcionário não logado.')
 
         } else {
             const CPF = req.body.cpf
@@ -36,15 +36,15 @@ class comissionaireController {
             const PASSWORD = req.body.password
 
             if (!CPF || !NAME || !EMAIL || !PASSWORD) {
-                return res.send(`Preencha todos os campos!`)
+                return res.status(400).send(`Preencha todos os campos!`)
             }
 
             if (typeof CPF == 'string') {
-                return res.send('O CPF precisa ser um númerp.')
+                return res.status(400).send('O CPF precisa ser um número.')
             }
 
             const create = await comissionaireModel.create_comissionaire(CPF, NAME, EMAIL, PASSWORD)
-            return res.json(create)
+            return res.status(201).json(create)
         }
     }
     /**
@@ -54,19 +54,19 @@ class comissionaireController {
    * @returns retorna um json com o funcionario relacioado ao cpf inserido
    */
     async findComissionaireByCPF(req, res) {
-        if (!req.session.comissionaireIn) {
-            return res.send('Funcionário não logado.')
+        if (!req.session.comissionaireId) {
+            return res.status(401).send('Funcionário não logado.')
 
         }
         const CPF = parseInt(req.params.cpf)
 
-        const find = await comissionaireModel.find_comissionaire_by_cpf(CPF)
+        const result = await comissionaireModel.find_comissionaire_by_cpf(CPF)
 
-        if (find === null) {
-            return res.status(404).send('Funcionário não encontrado.')
+        if (result === null) {
+            return res.status(404).send('Funcionário nao encontrado.')
         }
 
-        return res.json(find)
+        return res.json(result)
     }
     /**
    * 
@@ -75,8 +75,8 @@ class comissionaireController {
    * @returns retorna um json com os dados atualizados do funcionario
    */
     async updateComissionaire(req, res) {
-        if (!req.session.comissionaireIn) {
-            return res.send('Funcionário não logado.')
+        if (!req.session.comissionaireId) {
+            return res.status(401).send('Funcionário não logado.')
         }
 
         const ID = parseInt(req.params.id)
@@ -86,28 +86,27 @@ class comissionaireController {
         const PASSWORD = req.body.password
 
         if (!CPF || !NAME || !EMAIL || !PASSWORD) {
-            return res.send('Preencha todos os campos!')
+            return res.status(400).send('Preencha todos os campos.')
         }
 
         const find = await comissionaireModel.find_comissionaire_by_id(ID)
         if (find === null) {
-            return res.send('Funcionário nao encontrado.')
+            return res.status(404).send('Funcionário nao encontrado.')
         }
 
         if (typeof CPF == 'string') {
-            return res.send('O CPF precisa ser um número.')
+            return res.status(400).send('O CPF precisa ser um número.')
         }
 
         if (find.id_commissionare != req.session.comissionaireId) {
             return res.send('Não é possível atualizar a conta de outro funcionário.')
         }
 
-        const update = await comissionaireModel.update_comissionaire(ID, CPF, NAME, EMAIL, PASSWORD)
+        const result = await comissionaireModel.update_comissionaire(ID, CPF, NAME, EMAIL, PASSWORD)
 
-        req.session.comissionaireIn = false
-        req.session.comissionaireId = undefined
+        req.session.comissionaireId = false
 
-        return res.json(update)
+        return res.json(result)
     }
     /**
    * 
@@ -116,15 +115,15 @@ class comissionaireController {
    * @returns retorna a confirmação do funcionario deletado, se o cpf inserido existir no banco de dados
    */
     async deleteComissionaire(req, res) {
-        if (!req.session.comissionaireIn) {
-            return res.send('Funcionário não logado.')
+        if (!req.session.comissionaireId) {
+            return res.status(401).send('Funcionário não logado.')
         }
 
         const CPF = parseInt(req.params.cpf)
 
         const find = await comissionaireModel.find_comissionaire_by_cpf(CPF)
         if (find === null) {
-            return res.send('Funcionário nao encontrado.')
+            return res.status(404).send('Funcionário nao encontrado.')
         }
 
         if (find.id_commissionare == req.session.comissionaireId) {
@@ -144,22 +143,20 @@ class comissionaireController {
         const EMAIL = req.body.email
         const PASSWORD = req.body.password
         const CPF = parseInt(req.body.cpf)
-        
+
         if (!EMAIL || !PASSWORD || !CPF) {
-            return res.send('Preencha todos os dados.')
+            return res.status(400).send('Preencha todos os campos.')
         }
 
         const AUTH = await comissionaireModel.auth(EMAIL, PASSWORD, CPF)
 
         if (AUTH === null) {
-            return res.send('Credenciais incorretas.')
+            return res.status(401).send('Credenciais incorretas.')
         }
 
-        req.session.comissionaireIn = true
         req.session.comissionaireId = AUTH.id_commissionare
-        req.session.loggedin = undefined
-        req.session.cpf = undefined
-        req.session.clientId = undefined
+        req.session.clientCpf = false
+        req.session.clientId = false
 
         return res.send('Funcionário logado com sucesso.')
     }
