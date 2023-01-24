@@ -1,3 +1,6 @@
+// TODO: adicionar BCrypt
+// TODO: organizar as respostas em json 
+
 const express = require("express")
 const clientesRoutes = require("./routes/clientRoutes")
 const produtosRoutes = require("./routes/productRoutes")
