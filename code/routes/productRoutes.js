@@ -1,16 +1,16 @@
 /**
  * Arquivo que comtem as todas relacionadas aos produtos
  */
+
 const express = require('express')
 const router = express.Router()
 
-const produtoController = require("../controllers/productController")
+const ProductController = require("../controllers/ProductController")
 
-router.get('/', produtoController.listProducts)
-router.get('/:id', produtoController.findProductByID)
-router.post('/add', produtoController.createProduct)
-router.put('/:id', produtoController.updateProduct)
-router.delete('/:id', produtoController.deleteProduct)
+router.get('/', ProductController.listProducts)
+router.get('/:id', ProductController.findProductByID)
+router.post('/add', ProductController.createProduct)
+router.put('/:id', ProductController.updateProduct)
+router.delete('/:id', ProductController.deleteProduct)
 
 module.exports = router
-

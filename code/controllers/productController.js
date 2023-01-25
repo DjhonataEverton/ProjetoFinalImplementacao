@@ -1,6 +1,4 @@
-const prisma = require("@prisma/client")
 const productModel = require("../models/productModel")
-
 
 /**
  * @class classe responsável por guardar os metodos de tratamento das requisições e respostas dos produtos

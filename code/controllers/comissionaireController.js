@@ -1,4 +1,3 @@
-const prisma = require("@prisma/client")
 const comissionaireModel = require("../models/comissionaireModel")
 
 /**

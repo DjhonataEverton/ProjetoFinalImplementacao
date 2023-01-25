@@ -4,16 +4,14 @@
 
 const express = require('express')
 const router = express.Router()
-const path = require("path")
 
-const clientController = require("../controllers/clientController")
+const ClientController = require("../controllers/ClientController")
 
-router.get('/', clientController.listClients)
-router.get('/:cpf', clientController.findByCPF)
-router.post('/add', clientController.createClient)
-router.put('/:cpf', clientController.updateByCpf)
-router.delete('/:cpf', clientController.deleteByCpf)
-router.post('/auth', clientController.authenticate)
+router.get('/', ClientController.listClients)
+router.get('/:cpf', ClientController.findByCPF)
+router.post('/add', ClientController.createClient)
+router.put('/:cpf', ClientController.updateByCpf)
+router.delete('/:cpf', ClientController.deleteByCpf)
+router.post('/auth', ClientController.authenticate)
 
 module.exports = router
-
