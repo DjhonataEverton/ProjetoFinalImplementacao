@@ -29,28 +29,27 @@ class clientController {
    */
 
   async createClient(req, res) {
-    const CPF = req.body.cpf
-    const NAME = req.body.name
-    const EMAIL = req.body.email
-    const PASSWORD = req.body.password
+    const { cpf, name, email, password } = req.body
 
-    if (!CPF || !NAME || !EMAIL || !PASSWORD) {
+    if (!cpf || !name || !email || !password) {
       return res.status(400).send('Preencha todos os campos!')
     }
 
+    if (typeof cpf != 'number') {
+      return res.status(400).send('CPF deve ser um número!')
+    }
+
     try {
-      const result = await clientModel.create_client(CPF, NAME, EMAIL, PASSWORD)
+      const result = await clientModel.create_client(cpf, name, email, password)
       return res.status(201).json(result)
 
     } catch (err) {
       if (err.meta.target == 'tb_client_email_key') {
         return res.status(400).send('Email já cadastrado')
-
       } else {
         return res.status(400).send('CPF já cadastrado')
       }
     }
-
   }
 
   /**
@@ -63,22 +62,20 @@ class clientController {
   async findByCPF(req, res) {
     if (!req.session.clientCpf) {
       return res.status(401).send('Você não está logado!')
-
     }
 
-    const CPF = parseInt(req.params.cpf)
+    const cpf = parseInt(req.params.cpf)
 
-    if (CPF != req.session.clientCpf) {
+    if (cpf != req.session.clientCpf) {
       return res.send('Não é possível listar a conta de outro usuário')
     }
 
-    const result = await clientModel.find_client_by_CPF(CPF)
+    const result = await clientModel.find_client_by_CPF(cpf)
     if (result === null) {
       return res.status(404).send('Usuário não encontrado')
     }
 
     return res.json(result)
-
   }
 
   /**
@@ -93,25 +90,23 @@ class clientController {
       return res.status(401).send('Você não está logado!')
     }
 
-    const CPF = parseInt(req.params.cpf)
-    const NAME = req.body.name
-    const EMAIL = req.body.email
-    const PASSWORD = req.body.password
+    const cpf = parseInt(req.params.cpf)
+    const { name, email, password } = req.body
 
-    if (CPF != req.session.clientCpf) {
+    if (cpf != req.session.clientCpf) {
       return res.send('Não é possivel atualizar a conta de outro usuário')
     }
 
-    if (!CPF || !NAME || !EMAIL || !PASSWORD) {
+    if (!cpf || !name || !email || !password) {
       return res.status(400).send('Preencha todos os campos!')
     }
 
     try {
-      const result = await clientModel.update_client_by_CPF(CPF, NAME, EMAIL, PASSWORD)
+      const result = await clientModel.update_client_by_CPF(cpf, name, email, password)
 
       req.session.clientId = false
       req.session.clientCpf = false
-      
+
       return res.json(result)
 
     } catch (err) {
@@ -122,7 +117,6 @@ class clientController {
         return res.status(404).send('Cliente não encontrado')
       }
     }
-
   }
 
   /**
@@ -137,19 +131,19 @@ class clientController {
       return res.status(401).send('Você não está logado!')
     }
 
-    const CPF = parseInt(req.params.cpf)
+    const cpf = parseInt(req.params.cpf)
 
-    if (CPF != req.session.clientCpf) {
+    if (cpf != req.session.clientCpf) {
       return res.send('Não é possivel deletar a conta de outro usuário')
     }
 
     try {
-      await clientModel.delete_client_by_CPF(CPF)
+      await clientModel.delete_client_by_CPF(cpf)
 
       req.session.clientCpf = false
       req.session.clientId = false
 
-      return res.send(`Cliente de CPF '${CPF}' deletado.`)
+      return res.send(`Cliente de CPF '${cpf}' deletado.`)
 
     } catch (err) {
       return res.status(404).send('Usuário não encontrado')
@@ -161,26 +155,28 @@ class clientController {
    * @returns retorna a verificação de login do usuario, se existir no banco, ele loga.
    */
   async authenticate(req, res) {
-    const CPF = req.body.cpf;
-    const EMAIL = req.body.email;
-    const PASSWORD = req.body.password;
-
-    if (!EMAIL || !PASSWORD || !CPF) {
+    const { cpf, email, password } = req.body
+ 
+    if (!email || !password || !cpf) {
       return res.status(400).send('Preencha todos os campos!')
     }
 
-    if (typeof CPF === 'string') {
+    if (typeof cpf === 'string') {
       return res.status(400).send('CPF deve ser valor numérico')
     }
 
-    const AUTH = await clientModel.find_by_email_and_password(EMAIL, PASSWORD, CPF)
+    if(typeof password !== 'string'){
+      return res.status(400).send("Senha deve ser string")
+    }
 
-    if (AUTH === null) {
+    const auth = await clientModel.find_by_email_and_password(email, password, cpf)
+
+    if (auth === null) {
       return res.status(401).send('Credenciais incorretas')
     }
 
-    req.session.clientId = AUTH.id_client
-    req.session.clientCpf = CPF
+    req.session.clientId = auth.id_client
+    req.session.clientCpf = cpf
     req.session.comissionaireId = false
 
     return res.send('Usuario logado com sucesso')
