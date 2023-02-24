@@ -92,16 +92,14 @@ class clientModel {
     }
     /**
      * 
-     * @param {String} EMAIL recebe o email do cliente a ser encontrado
-     * @param {String} PASSWORD recebe a senba do cleinte a ser encontrado
-     * @param {Int} CPF recebe o CPF do cleinte a ser encontrado
+     * @param {String} PASSWORD recebe a senha do cleinte a ser encontrado
+     * @param {Int} CPF recebe o CPF do cliente a ser encontrado
      * @returns retorna o metodo de encontrar o cliente pelo EMAIL PASSWORD CPF
      */
-    async find_by_email_and_password(EMAIL, PASSWORD, CPF) {
+    async find_by_cpf_and_password(PASSWORD, CPF) {
         prisma.$connect
         const findClient = await prisma.tb_client.findFirst({
             where: {
-                email: EMAIL,
                 password: PASSWORD,
                 cpf_cnpj: CPF
             }

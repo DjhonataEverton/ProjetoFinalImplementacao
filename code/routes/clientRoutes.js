@@ -7,6 +7,14 @@ const router = express.Router()
 
 const ClientController = require("../controllers/ClientController")
 
+// Rotas frontend
+router.get('/login', ClientController.login)
+router.get('/register', ClientController.register)
+router.get('/dashboard', ClientController.dashboard)
+router.get('/fazerpedido', ClientController.fazerPedido)
+
+// Rotas backend
+router.get('/logout', ClientController.logout)
 router.get('/', ClientController.listClients)
 router.get('/:cpf', ClientController.findByCPF)
 router.post('/add', ClientController.createClient)

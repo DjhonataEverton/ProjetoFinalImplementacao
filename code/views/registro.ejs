@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <header class="homeHeader">
+        <nav>
+            <ul class="navbarLinks">
+                <li><a href="/"><button class="headerButtons">Home</button></a></li>
+                <li><a href="/clientes/login"><button class="headerButtons">Login</button></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="homeBody">
+        <form action="/clientes/add" method="post" id="formRegister">
+            <label for="cpf">CPF</label>
+            <input type="number" name="cpf" id="cpf">
+            
+            <label for="name">Nome</label>
+            <input type="text" name="name" id="name">
+            
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email">
+            
+            <label for="password">Senha</label>
+            <input type="password" name="password" id="password">
+            <br>
+            
+            <input type="submit" value="Enviar">
+        </form>
+    </main>
+</body>
+</html>

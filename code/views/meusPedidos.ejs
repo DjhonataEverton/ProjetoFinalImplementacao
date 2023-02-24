@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Pedidos</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="productsBody">
+    <header class="homeHeader">
+        <nav>
+          <ul class="navbarLinks">
+            <li><a href="/"><button class="headerButtons">Home</button></a></li>
+
+            <li><a href="/clientes/dashboard"><input class="headerButtons" type="button" value="Dashboard"></a></li>
+
+            <li><a href="/clientes/logout"><button class="headerButtons">Logout</button></a></li>
+          </ul>
+        </nav>
+      </header>
+
+    <main class="productsPage">
+
+        <% for(element of result){ %>
+            <div class="productList">
+                <h2><%= element.product %></h2>
+                <p>Quantidade: <%= element.quantity %></p>
+                <% let aceito = element.accept == 'N' ? 'Não' : 'Sim' %>
+                <p>Aceito: <%= aceito %></p>
+            </div>
+            <% } %>
+
+    </main>
+</body>
+</html>

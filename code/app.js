@@ -1,5 +1,4 @@
 // TODO: adicionar BCrypt
-// TODO: organizar as respostas em json 
 
 const express = require("express")
 const clientesRoutes = require("./routes/clientRoutes")
@@ -9,7 +8,7 @@ const comissionaireRoutes = require("./routes/comissionaireRoutes")
 const path = require("path")
 const app = express()
 const expressSession = require('express-session')
-const { PrismaSessionStore }= require('@quixo3/prisma-session-store')
+const { PrismaSessionStore } = require('@quixo3/prisma-session-store')
 const { PrismaClient } = require('@prisma/client');
 
 app.use(
@@ -33,9 +32,9 @@ app.use(
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.set('views', './views');
-app.use(express.static(path.join(__dirname, "public")))
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/clientes', clientesRoutes)
 app.use('/produtos', produtosRoutes)
@@ -43,9 +42,9 @@ app.use('/orders', orderRoutes)
 app.use('/comissionaires', comissionaireRoutes)
 
 app.get('/', (req, res) => {
-    console.log(req.session)
-    return res.send("<h1>página teste</h1>")
+    return res.render('home', { clientCpf: req.session.clientCpf })
 })
+
 app.listen(3000, () => {
     console.log(`Servidor iniciado em http://localhost:3000`)
 })

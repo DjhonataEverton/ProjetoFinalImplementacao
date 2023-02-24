@@ -19,26 +19,35 @@ class orderController {
         return res.json(result)
     }
 
+    async listOrdersByUserId(req, res) {
+        if (!req.session.clientId){
+            return res.status(401).send('Usuário não logado!')
+        }
+        
+        const result = await orderModel.list_orders_by_client_id(req.session.clientId)
+        return res.render('meusPedidos', {result: result})
+    }
+
     async createOrder(req, res) {
         if (!req.session.clientId) {
             return res.status(401).send('Usuário nao logado!')
         }
 
         const PRODUCT = req.body.product
-        const QUANTITY = req.body.quantity
+        const QUANTITY = Number(req.body.quantity)
         const ACCEPT = 'N'
         const ID_CLIENT = req.session.clientId
-        
+
         if (!PRODUCT || !QUANTITY) {
             return res.status(400).send('Preencha todos os campos.')
         }
 
-        if(typeof QUANTITY != "number"){
+        if (typeof QUANTITY != "number") {
             return res.status(400).send('A quantidade deve ser um número.')
         }
 
         const result = await orderModel.create_order(PRODUCT, QUANTITY, ACCEPT, ID_CLIENT)
-        return res.status(201).json(result)
+        return res.redirect('/clientes/dashboard')
     }
     /**
    * 

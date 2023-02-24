@@ -4,25 +4,30 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/css/styles.css" type="text/css">
   <title>Home</title>
-  
 </head>
-<body>
-  <section class="homeBox">
-    <header class="homeHeader">
-      <form method="get" action="/login">
-        <input class="headerButtons"type="submit" value="ADM - LOGIN">
-      </form>
-      <form action="/login" method="get">
-        <input class="headerButtons"type="submit" value="CLIENTE - LOGIN">
-      </form>
-    </header>
-    <div class="homeBody">
-      <form action="" method="get">
-        <input id="orderButton" type="button" value="REALIZAR PEDIDO">
-      </form>
-    </div>
-  </section>
-</main>
+<body class="homeBox">
+  <header class="homeHeader">
+    <nav>
+      <ul class="navbarLinks">
+
+        <li><a href="/clientes/login"><input class="headerButtons" type="button" value="Adm - Login"></a></li>
+
+        <% if(!clientCpf){ %>
+        <li><a href="/clientes/login"><input class="headerButtons" type="button" value="Cliente - Login"></a></li>
+        <% }else{ %>
+        <li><a href="/clientes/dashboard"><input class="headerButtons" type="button" value="Cliente - Dashboard"></a></li>
+        <% } %>
+
+      </ul>
+    </nav>
+  </header>
+
+  <main class="homeBody">
+      <% if(clientCpf){ %>
+      <a href="/clientes/fazerpedido"><input id="orderButton" type="button" value="Realizar Pedido"></a>
+      <% } %>
+  </main>
+
 </body>

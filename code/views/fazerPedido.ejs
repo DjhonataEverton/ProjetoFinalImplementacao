@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faça seu Pedido</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <header class="homeHeader">
+        <nav>
+            <ul class="navbarLinks">
+                <li><a href="/"><button class="headerButtons">Home</button></a></li>
+
+                <li><a href="/clientes/dashboard"><input class="headerButtons" type="button" value="Dashboard"></a></li>
+
+                <li><a href="/clientes/logout"><button class="headerButtons">Logout</button></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class='productsPage'>
+            <form class="formOrderRequest" action="/orders/add" method="post">
+                <h2>Faça seu pedido</h2>
+                <p>
+                    <label for="product">Produto</label>
+                    <br>
+                    <select name="product" id="product" required>
+                        <option value="Queijo">Queijo</option>
+                        <option value="Leite">Leite</option>
+                        <option value="Iogurte">Iogurte</option>
+                    </select>
+                </p>
+
+                <p>
+                    <label for="quantity">Quantidade</label>
+                    <br>
+                    <input type="number" name="quantity" class="quantity"  required>
+                </p>
+
+                <button type="submit" id="makeOrderButton">Enviar</button>
+            </form>
+    </main>
+
+</body>
+</html>

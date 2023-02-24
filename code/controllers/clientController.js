@@ -29,7 +29,8 @@ class clientController {
    */
 
   async createClient(req, res) {
-    const { cpf, name, email, password } = req.body
+    const cpf = Number(req.body.cpf)
+    const { name, email, password } = req.body
 
     if (!cpf || !name || !email || !password) {
       return res.status(400).send('Preencha todos os campos!')
@@ -40,8 +41,8 @@ class clientController {
     }
 
     try {
-      const result = await clientModel.create_client(cpf, name, email, password)
-      return res.status(201).json(result)
+      await clientModel.create_client(cpf, name, email, password)
+      return res.redirect('/')
 
     } catch (err) {
       if (err.meta.target == 'tb_client_email_key') {
@@ -155,13 +156,14 @@ class clientController {
    * @returns retorna a verificação de login do usuario, se existir no banco, ele loga.
    */
   async authenticate(req, res) {
-    const { cpf, email, password } = req.body
- 
-    if (!email || !password || !cpf) {
+    let { cpf, password } = req.body
+    cpf = Number(cpf)
+
+    if (!password || !cpf) {
       return res.status(400).send('Preencha todos os campos!')
     }
 
-    if (typeof cpf === 'string') {
+    if (typeof cpf !== 'number') {
       return res.status(400).send('CPF deve ser valor numérico')
     }
 
@@ -169,7 +171,7 @@ class clientController {
       return res.status(400).send("Senha deve ser string")
     }
 
-    const auth = await clientModel.find_by_email_and_password(email, password, cpf)
+    const auth = await clientModel.find_by_cpf_and_password(password, cpf)
 
     if (auth === null) {
       return res.status(401).send('Credenciais incorretas')
@@ -179,9 +181,43 @@ class clientController {
     req.session.clientCpf = cpf
     req.session.comissionaireId = false
 
-    return res.send('Usuario logado com sucesso')
+    return res.render('home', {clientCpf: req.session.clientCpf})
   }
 
-}
+  async logout(req, res){
+    if(req.session.clientId){
+      req.session.clientId = false
+      req.session.clientCpf = false
+    }
 
+    return res.render('home', {clientCpf: req.session.clientCpf})
+  }
+
+  // -----------Rotas front-------------
+
+  // Página de login
+  login(req, res){
+    return res.render('login')
+  }
+
+  // Página de cadastro
+  register(req, res){
+    return res.render('registro')
+  }
+
+  // Dashboard
+  dashboard(req, res){
+    return res.render('clientDashboard')
+  }
+
+  // Realizar pedido
+  fazerPedido(req, res){
+    if(req.session.clientId){
+      return res.render('fazerPedido')
+    }
+
+    return res.redirect('/')
+  }
+  
+}
 module.exports = new clientController()

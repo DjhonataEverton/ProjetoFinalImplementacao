@@ -27,6 +27,14 @@ class orderModel {
 
         return allOrders
     }
+
+    async list_orders_by_client_id(clientId) {
+        await prisma.$connect
+        const orders = await prisma.tb_order.findMany({ where: { id_client: clientId } })
+        await prisma.$disconnect
+
+        return orders
+    }
     /**
      * 
      * @param {Int} ID recebe o ID do pedido que deseja encontrar
@@ -40,7 +48,7 @@ class orderModel {
             }
         })
         prisma.$disconnect
-       
+
         return findOrder
     }
     /**
@@ -111,13 +119,13 @@ class orderModel {
      * @param {Character} ACCEPT recebe o valor de aprovado ou não
      * @returns retorna o meotodo de aprovação ou negação de pedidos
      */
-    async approve(ID, ACCEPT){
+    async approve(ID, ACCEPT) {
         prisma.$connect
         const approveOrder = await prisma.tb_order.update({
             where: {
                 id_order: ID
             },
-            data:{
+            data: {
                 accept: ACCEPT
             }
         })
