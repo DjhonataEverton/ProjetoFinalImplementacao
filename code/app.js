@@ -1,12 +1,16 @@
 // TODO: adicionar BCrypt
-
 const express = require("express")
+const path = require("path")
+const app = express()
+const flash = require('connect-flash')
+
+// Rotas
 const clientesRoutes = require("./routes/clientRoutes")
 const produtosRoutes = require("./routes/productRoutes")
 const orderRoutes = require("./routes/orderRoutes")
 const comissionaireRoutes = require("./routes/comissionaireRoutes")
-const path = require("path")
-const app = express()
+
+// Pacotes de Sessão
 const expressSession = require('express-session')
 const { PrismaSessionStore } = require('@quixo3/prisma-session-store')
 const { PrismaClient } = require('@prisma/client');
@@ -35,7 +39,9 @@ app.use(express.json())
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(flash())
 
+// Rotas
 app.use('/clientes', clientesRoutes)
 app.use('/produtos', produtosRoutes)
 app.use('/orders', orderRoutes)

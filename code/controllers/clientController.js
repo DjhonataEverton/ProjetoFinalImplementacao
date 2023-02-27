@@ -181,7 +181,8 @@ class clientController {
     req.session.clientCpf = cpf
     req.session.comissionaireId = false
 
-    return res.render('home', {clientCpf: req.session.clientCpf})
+    res.redirect('/')
+    return
   }
 
   async logout(req, res){
@@ -190,7 +191,8 @@ class clientController {
       req.session.clientCpf = false
     }
 
-    return res.render('home', {clientCpf: req.session.clientCpf})
+    res.redirect('/')
+    return
   }
 
   // -----------Rotas front-------------
@@ -216,7 +218,8 @@ class clientController {
       return res.render('fazerPedido')
     }
 
-    return res.redirect('/')
+    res.redirect('/')
+    return
   }
   
 }

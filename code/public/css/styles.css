@@ -309,7 +309,7 @@ ul {
 
   line-height: 30px;
 }
-#formRegister input{
+#formRegister input, #formRegister button{
   width: 300px;
   height: 35px;
   border-radius: 7px;
@@ -317,6 +317,12 @@ ul {
   font-size: 25px;
   border: none;
   box-shadow: 1px 1px 10px #c5ccdb;
-  background-color: #E8EDF1;
-
+  background-color: #e8f0fe;
+}
+#formRegister button{
+  background-color: #c5ccdb;
+}
+#formRegister button:hover{
+  cursor: pointer;
+  background-color: #e1f5fa;
 }

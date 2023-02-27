@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Login</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul><a href="/"><li><button class="headerButtons">Voltar</button></li></a></ul>
+    </nav>
+  </header>
+
+  <section class="userLoginBox">
+    <div class="userLoginBody">
+      <form class="userLoginForm" action="/clientes/auth" method="post">
+        <input type="number" name="cpf", id="userCpf" placeholder=" CPF" title="CPF">
+        <br>
+        <input type="password" name="password" id="userPass" placeholder=" Senha" title="Senha">
+        <br>
+        <input id="userLoginButton" type="submit" value="Login">
+        <br>
+        <a href="/clientes/register"><input type="button" value="Cadastre-se" class="register"></a>
+      </form>
+    </div>
+  </section>
+</section>
+</body>
+</html>

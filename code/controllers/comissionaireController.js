@@ -159,6 +159,12 @@ class comissionaireController {
 
         return res.send('Funcionário logado com sucesso.')
     }
+
+
+    // Rotas front
+    async login(req, res) {
+        
+    }
 }
 
 module.exports = new comissionaireController()
