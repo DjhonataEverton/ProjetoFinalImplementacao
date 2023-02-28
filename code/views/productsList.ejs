@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css" type="text/css">
+  <title>Lista de Produtos</title>
+  <script src="https://kit.fontawesome.com/3a33c4c41c.js" crossorigin="anonymous"></script>
+</head>
+<body id="productsBody">
+  <header class="homeHeader">
+    <nav>
+      <ul class="navbarLinks">
+
+        <li><a href="/produtos"><input class="headerButtons" type="button" value="Voltar"></a></li>
+        <li><a href="/comissionaires/logout"><input class="headerButtons" type="button" value="Logout"></a></li>
+
+      </ul>
+    </nav>
+  </header>
+
+  <main class="productsPage">
+
+    <% for(element of result){ %>
+        <a href="/produtos/<%= element.id_products %>"><div class="productList">
+            <h2><%= element.product %></h2>
+            <p>Preço: R$<%= element.price %></p>
+            <% const unity = element.unity == 'l' ? 'Litro' : 'Kilograma' %>
+            <p>Unidade: <%= unity %></p>
+        </div></a>
+    <% } %>
+    
+  </main>
+
+</body>

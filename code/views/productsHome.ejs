@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Produtos</title>
+</head>
+<body>
+
+  <header class="homeHeader">
+    <nav>
+      <ul class="navbarLinks">
+        <li><a href="/comissionaires/dashboard"><button class="headerButtons">Voltar</button></a></li>
+        <li><a href="/comissionaires/logout"><button class="headerButtons">Logout</button></a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <main class="homeBody">
+    <form action="/produtos/find" method="post" class="findProductForm">
+      <input type="number" class="findProductForm" id="searchInput" name="id" placeholder="Digite o ID do produto" required>
+      <input type="submit" class="findProductForm" id="searchButton" value="Buscar Produtos">
+    </form>
+    <a href="/produtos/list"><input id="orderButton" type="button" value="Listar Produtos"></a>
+    <a href="/produtos/insert"><input id="orderButton" type="button" value="Inserir Produto"></a>
+  </main>
+
+</body>
+</html>

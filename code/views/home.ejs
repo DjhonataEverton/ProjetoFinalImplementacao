@@ -12,12 +12,16 @@
     <nav>
       <ul class="navbarLinks">
 
-        <li><a href="/clientes/login"><input class="headerButtons" type="button" value="Adm - Login"></a></li>
+        <% if(!comissionaireId) { %>
+          <li><a href="/comissionaires/login"><input class="headerButtons" type="button" value="Adm - Login"></a></li>
+        <% }else{ %>
+          <li><a href="/comissionaires/dashboard"><input class="headerButtons" type="button" value="Adm - Dashboard"></a></li>
+        <% } %>
 
         <% if(!clientCpf){ %>
-        <li><a href="/clientes/login"><input class="headerButtons" type="button" value="Cliente - Login"></a></li>
+          <li><a href="/clientes/login"><input class="headerButtons" type="button" value="Cliente - Login"></a></li>
         <% }else{ %>
-        <li><a href="/clientes/dashboard"><input class="headerButtons" type="button" value="Cliente - Dashboard"></a></li>
+          <li><a href="/clientes/dashboard"><input class="headerButtons" type="button" value="Cliente - Dashboard"></a></li>
         <% } %>
 
       </ul>
@@ -25,7 +29,7 @@
   </header>
 
   <main class="homeBody">
-      <% if(clientCpf){ %>
+      <% if(clientCpf) { %>
       <a href="/clientes/fazerpedido"><input id="orderButton" type="button" value="Realizar Pedido"></a>
       <% } %>
   </main>

@@ -17,7 +17,7 @@ class productController {
         }
 
         const result = await productModel.list_products()
-        return res.json(result)
+        return res.render('productsList', { result: result })
     }
     /**
    * 
@@ -30,25 +30,26 @@ class productController {
             return res.status(401).send('Accesso Restrito')
         }
 
-        const PRODUCT = req.body.product
-        const PRICE = req.body.price
-        const UNITY = req.body.unity
-        
-        
-        if (!PRODUCT || !PRICE || !UNITY) {
+        const {product, unity} = req.body
+        const price = Number(req.body.price)
+
+
+        if (!product || !price || !unity) {
             return res.status(400).send('Preencha todos os campos.')
         }
 
-        if(UNITY != 'kg' && UNITY != 'l'){
+        if (unity != 'kg' && unity != 'l') {
             return res.status(400).send('A unidade deve ser `kg` ou `l`!')
         }
 
-        if (typeof PRICE != 'number') {
+        if (typeof price != 'number') {
             return res.status(400).send('O preço precisa ser um número.')
         }
 
-        const result = await productModel.create_product(PRODUCT, PRICE, UNITY)
-        return res.status(201).json(result)
+        await productModel.create_product(product, price, unity)
+
+        res.redirect('/produtos')
+        return
     }
     /**
    * 
@@ -68,7 +69,8 @@ class productController {
             return res.status(404).send('Produto não encontrado.')
         }
 
-        return res.json(result)
+        res.render('viewProduct', {product: result})
+        return
     }
     /**
    * 
@@ -81,30 +83,31 @@ class productController {
             return res.status(401).send('Acesso Restrito')
         }
 
-        const ID = parseInt(req.params.id)
-        const PRODUCT = req.body.product
-        const PRICE = req.body.price
-        const UNITY = req.body.unity
+        const id = parseInt(req.params.id)
+        const {product, unity} = req.body
+        const price = Number(req.body.price)
 
-        if (!PRODUCT || !PRICE || !UNITY) {
+        if (!product || !price || !unity) {
             return res.status(400).send('Preencha todos os campos.')
         }
 
-        if(UNITY != 'kg' && UNITY != 'l'){
+        if (unity != 'kg' && unity != 'l') {
             return res.status(400).send('A unidade deve ser `kg` ou `l`!')
         }
 
-        if (typeof PRICE != 'number') {
+        if (typeof price != 'number') {
             return res.status(400).send('O preço precisa ser um número.')
         }
 
-        const find = await productModel.find_product(ID)
+        const find = await productModel.find_product(id)
         if (find === null) {
             return res.status(404).send('Produto não encontrado.')
         }
 
-        const result = await productModel.update_product(ID, PRODUCT, PRICE, UNITY)
-        return res.json(result)
+        await productModel.update_product(id, product, price, unity)
+
+        res.redirect('/produtos')
+        return
     }
     /**
    * 
@@ -125,8 +128,48 @@ class productController {
         }
 
         await productModel.delete_product(ID)
-        return res.send(`Produto de ID '${ID}' deletado.`)
+
+        res.redirect('/produtos')
+        return
     }
+
+    // Front
+    home(req, res){
+        if(!req.session.comissionaireId){
+            res.status(401).send('Acesso Restrito')
+            return
+        }
+
+        res.render('productsHome')
+        return
+    }
+
+    insertProduct(req, res){
+        if(!req.session.comissionaireId){
+            res.status(401).send('Acesso Restrito')
+            return
+        }
+
+        res.render('createProduct')
+        return
+    }
+
+    async findProductPost(req, res){
+        if(!req.session.comissionaireId){
+            res.status(401).send('Acesso Restrito')
+            return
+        }
+
+        const id = parseInt(req.body.id)
+        const result = await productModel.find_product(id)
+        if (result === null) {
+            return res.redirect('/404')
+        }
+
+        res.redirect(`/produtos/${result.id_products}`)
+        return
+    }
+
 }
 
 module.exports = new productController()

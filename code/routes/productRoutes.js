@@ -7,10 +7,16 @@ const router = express.Router()
 
 const ProductController = require("../controllers/ProductController")
 
-router.get('/', ProductController.listProducts)
+// Rotas Frontend
+router.get('/insert', ProductController.insertProduct)
+router.post('/find', ProductController.findProductPost)
+router.get('/', ProductController.home)
+
+// Rotas Backend
+router.get('/list', ProductController.listProducts)
 router.get('/:id', ProductController.findProductByID)
 router.post('/add', ProductController.createProduct)
-router.put('/:id', ProductController.updateProduct)
-router.delete('/:id', ProductController.deleteProduct)
+router.post('/edit/:id', ProductController.updateProduct)
+router.get('/delete/:id', ProductController.deleteProduct)
 
 module.exports = router

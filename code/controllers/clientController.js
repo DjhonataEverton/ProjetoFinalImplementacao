@@ -209,6 +209,12 @@ class clientController {
 
   // Dashboard
   dashboard(req, res){
+    if(!req.session.clientId){
+      res.status(401).send('Usuário não logado')
+      return
+
+    }
+
     return res.render('clientDashboard')
   }
 

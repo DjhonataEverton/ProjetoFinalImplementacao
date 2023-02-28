@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css" type="text/css">
+  <title>Inserir Produto</title>
+  <script src="https://kit.fontawesome.com/3a33c4c41c.js" crossorigin="anonymous"></script>
+</head>
+<body id="productsBody">
+  <header class="homeHeader">
+    <nav>
+      <ul class="navbarLinks">
+
+        <li><a href="/produtos"><input class="headerButtons" type="button" value="Voltar"></a></li>
+        <li><a href="/comissionaires/logout"><input class="headerButtons" type="button" value="Logout"></a></li>
+
+      </ul>
+    </nav>
+  </header>
+
+  <main class="productsPage">
+
+    <section class="productFormBox">
+        <div class="productFormBody">
+          <form action="/produtos/add" method="post">
+            <input type="text"  name="product", class="productForm" placeholder=" Nome" required>
+            <br>
+            <input type="number" step="any" name="price" class="productForm" placeholder=" Preço" required>
+            <br>
+            <select name="unity" id="selectUnity">
+                <option value="l"> Litro</option>
+                <option value="kg"> Kilograma</option>
+            </select>
+            <br>
+            <input id="userLoginButton" type="submit" value="Inserir">
+          </form>
+        </div>
+      </section>
+    
+  </main>
+
+</body>

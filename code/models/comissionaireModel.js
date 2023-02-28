@@ -118,11 +118,10 @@ class comissionaireModel {
      * @param {Int} CPF recebe o CPF do funcionario a ser autenticado  
      * @returns 
      */
-    async auth(EMAIL, PASSWORD, CPF){
+    async auth(PASSWORD, CPF){
         prisma.$connect
         const result = await prisma.tb_commissionare.findFirst({
             where:{
-                email: EMAIL,
                 password: PASSWORD,
                 cpf: CPF
             }

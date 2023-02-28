@@ -47,8 +47,12 @@ app.use('/produtos', produtosRoutes)
 app.use('/orders', orderRoutes)
 app.use('/comissionaires', comissionaireRoutes)
 
+app.get('/404', (req, res) => {
+    return res.render('404')
+})
+
 app.get('/', (req, res) => {
-    return res.render('home', { clientCpf: req.session.clientCpf })
+    return res.render('home', { clientCpf: req.session.clientCpf, comissionaireId: req.session.comissionaireId })
 })
 
 app.listen(3000, () => {

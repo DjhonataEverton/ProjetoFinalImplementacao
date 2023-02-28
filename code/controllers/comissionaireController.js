@@ -139,15 +139,14 @@ class comissionaireController {
    * @returns retorna a verificação de login do funcionario, se existir no banco, ele loga.
    */
     async authenticate(req, res) {
-        const EMAIL = req.body.email
-        const PASSWORD = req.body.password
-        const CPF = parseInt(req.body.cpf)
+        const password = req.body.password
+        const cpf = Number(req.body.cpf)
 
-        if (!EMAIL || !PASSWORD || !CPF) {
+        if (!password || !cpf) {
             return res.status(400).send('Preencha todos os campos.')
         }
 
-        const AUTH = await comissionaireModel.auth(EMAIL, PASSWORD, CPF)
+        const AUTH = await comissionaireModel.auth(password, cpf)
 
         if (AUTH === null) {
             return res.status(401).send('Credenciais incorretas.')
@@ -157,13 +156,32 @@ class comissionaireController {
         req.session.clientCpf = false
         req.session.clientId = false
 
-        return res.send('Funcionário logado com sucesso.')
+        res.redirect('/comissionaires/dashboard')
+        return
+    }
+
+    async logout(req, res) {
+        if (req.session.comissionaireId) {
+            req.session.comissionaireId = false
+        }
+
+        res.redirect('/')
+        return
     }
 
 
     // Rotas front
     async login(req, res) {
-        
+        return res.render('admlogin')
+    }
+
+    async dashboard(req, res) {
+        if(!req.session.comissionaireId){
+            res.status(401).send('Funcionário não logado.')
+            return
+        }
+
+        return res.render('admDashboard')
     }
 }
 
