@@ -101,7 +101,7 @@ class orderController {
         } 
 
         await orderModel.delete_order(ID)
-        return res.send(`Order de ID '${ID}' deletada.`)
+        return res.redirect('/orders/myOrders')
     }
 
     /**

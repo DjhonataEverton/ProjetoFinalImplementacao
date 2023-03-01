@@ -103,12 +103,13 @@ class clientController {
     }
 
     try {
-      const result = await clientModel.update_client_by_CPF(cpf, name, email, password)
+      await clientModel.update_client_by_CPF(cpf, name, email, password)
 
       req.session.clientId = false
       req.session.clientCpf = false
 
-      return res.json(result)
+      res.redirect('/')
+      return
 
     } catch (err) {
       if (err.meta.target == 'tb_client_email_key') {
@@ -144,9 +145,14 @@ class clientController {
       req.session.clientCpf = false
       req.session.clientId = false
 
-      return res.send(`Cliente de CPF '${cpf}' deletado.`)
+      res.redirect('/')
+      return
 
     } catch (err) {
+      if (err.code == 'P2003') {
+        return res.send('Não é possível deletar usuários com Pedidos')
+      }
+
       return res.status(404).send('Usuário não encontrado')
     }
   }
@@ -167,7 +173,7 @@ class clientController {
       return res.status(400).send('CPF deve ser valor numérico')
     }
 
-    if(typeof password !== 'string'){
+    if (typeof password !== 'string') {
       return res.status(400).send("Senha deve ser string")
     }
 
@@ -185,8 +191,8 @@ class clientController {
     return
   }
 
-  async logout(req, res){
-    if(req.session.clientId){
+  async logout(req, res) {
+    if (req.session.clientId) {
       req.session.clientId = false
       req.session.clientCpf = false
     }
@@ -198,18 +204,18 @@ class clientController {
   // -----------Rotas front-------------
 
   // Página de login
-  login(req, res){
+  login(req, res) {
     return res.render('login')
   }
 
   // Página de cadastro
-  register(req, res){
+  register(req, res) {
     return res.render('registro')
   }
 
   // Dashboard
-  dashboard(req, res){
-    if(!req.session.clientId){
+  dashboard(req, res) {
+    if (!req.session.clientId) {
       res.status(401).send('Usuário não logado')
       return
 
@@ -219,14 +225,31 @@ class clientController {
   }
 
   // Realizar pedido
-  fazerPedido(req, res){
-    if(req.session.clientId){
+  fazerPedido(req, res) {
+    if (req.session.clientId) {
       return res.render('fazerPedido')
     }
 
     res.redirect('/')
     return
   }
-  
+
+  // Edição
+  async editPage(req, res) {
+    if (!req.session.clientCpf) {
+      res.send('Voce nao está logado')
+      return
+    }
+
+    const cpf = req.session.clientCpf
+    const user = await clientModel.find_client_by_CPF(cpf)
+
+    if (user == null) {
+      res.send('Usuário não encontrado')
+    }
+
+    res.render('clientEdit', { user: user })
+    return
+  }
 }
 module.exports = new clientController()

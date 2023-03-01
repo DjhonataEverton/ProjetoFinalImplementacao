@@ -36,7 +36,7 @@
   font-size: 15px;
   border-radius: 10px;
   border: none;
-  box-shadow: 1px 1px 50px #C5D7DB;
+  box-shadow: 1px 1px 50px #b8cbcf;
 }
 
 .homeBody {
@@ -55,11 +55,13 @@
   height: 100px;
   border-radius: 10px;
   border: none;
-  box-shadow: 1px 1px 80px #C5D7DB;
+  box-shadow: 1px 1px 80px #b8cbcf;
+  background-color: #E8EDF1;
 }
 
 #orderButton:hover,
-.headerButtons:hover {
+.headerButtons:hover,
+.accountBtns:hover {
   background-color: #e1f5fa;
   cursor: pointer;
 }
@@ -95,7 +97,7 @@ ul {
   align-items: center;
 }
 
-.userLoginBody, 
+.userLoginBody,
 .productFormBody {
   width: 500px;
   height: 500px;
@@ -103,7 +105,7 @@ ul {
   justify-content: center;
   align-items: center;
   border-radius: 30px;
-  box-shadow: 1px 1px 50px #C5D7DB;
+  box-shadow: 1px 1px 50px #b8cbcf;
 }
 
 #userCpf,
@@ -118,7 +120,7 @@ ul {
   margin-bottom: 10px;
   font-size: 25px;
   border: none;
-  box-shadow: 1px 1px 10px #C5CCDB;
+  box-shadow: 1px 1px 10px #b8cbcf;
   background-color: #E8EDF1;
 }
 
@@ -154,7 +156,7 @@ ul {
   justify-content: center;
   align-items: center;
   border-radius: 30px;
-  box-shadow: 1px 1px 50px #C5D7DB;
+  box-shadow: 1px 1px 50px #b8cbcf;
 }
 
 #registCpf,
@@ -168,7 +170,7 @@ ul {
   margin-bottom: 10px;
   font-size: 25px;
   border: none;
-  box-shadow: 1px 1px 10px #C5CCDB;
+  box-shadow: 1px 1px 10px #b8cbcf;
   background-color: #E8EDF1;
 }
 
@@ -187,7 +189,17 @@ ul {
   gap: 2em;
 }
 
-.findProductForm{
+.accountBtns {
+  font-size: 25px;
+  width: 300px;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 1px 1px 80px #b8cbcf;
+  background-color: #E8EDF1;
+}
+
+.findProductForm {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -218,7 +230,7 @@ ul {
 
   line-height: 30px;
 
-  box-shadow: 1px 1px 80px #C5D7DB;
+  box-shadow: 1px 1px 80px #b8cbcf;
 
   display: flex;
   flex-direction: column;
@@ -246,7 +258,7 @@ ul {
   height: 30vh;
 
   border-radius: 25px;
-  box-shadow: 1px 1px 80px #C5D7DB;
+  box-shadow: 1px 1px 80px #b8cbcf;
 
   align-items: center;
   justify-content: center;
@@ -274,7 +286,7 @@ ul {
   border-radius: 7px;
   font-size: 25px;
   border: none;
-  box-shadow: 1px 1px 10px #C5CCDB;
+  box-shadow: 1px 1px 10px #b8cbcf;
   background-color: #E8EDF1;
   margin-bottom: 10px;
 }
@@ -284,14 +296,15 @@ ul {
   cursor: pointer;
 }
 
-.quantity, select{
+.quantity,
+select {
   width: 300px;
   height: 35px;
   border-radius: 7px;
   margin-bottom: 10px;
   font-size: 25px;
   border: none;
-  box-shadow: 1px 1px 10px #c5ccdb;
+  box-shadow: 1px 1px 10px #b8cbcf;
   background-color: #E8EDF1;
 
   -webkit-appearance: none;
@@ -300,17 +313,15 @@ ul {
 
 }
 
-
-
 /* ------------REGISTRO------------ */
-#formRegister{
+#formRegister {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
   border-radius: 25px;
-  box-shadow: 1px 1px 80px #C5D7DB;
+  box-shadow: 1px 1px 80px #b8cbcf;
 
   width: 30vw;
   height: 45vh;
@@ -318,20 +329,24 @@ ul {
 
   line-height: 30px;
 }
-#formRegister input, #formRegister button{
+
+#formRegister input,
+#formRegister button {
   width: 300px;
   height: 35px;
   border-radius: 7px;
   margin-bottom: 10px;
   font-size: 25px;
   border: none;
-  box-shadow: 1px 1px 10px #c5ccdb;
+  box-shadow: 1px 1px 10px #b8cbcf;
   background-color: #e8f0fe;
 }
-#formRegister button{
+
+#formRegister button {
   background-color: #c5ccdb;
 }
-#formRegister button:hover{
+
+#formRegister button:hover {
   cursor: pointer;
   background-color: #e1f5fa;
 }
@@ -339,35 +354,38 @@ ul {
 
 /* Buscar produtos */
 
-.findProductForm{
-  height: 60px; 
+.findProductForm {
+  height: 60px;
   gap: .5em;
 }
-#searchInput{
+
+#searchInput {
   width: 300px;
 
   border-radius: 10px;
   border: none;
-  box-shadow: 1px 1px 80px #C5D7DB;
+  box-shadow: 1px 1px 80px #b8cbcf;
 
   font-size: 25px;
 }
-#searchButton{
+
+#searchButton {
   width: 120px;
 
   border-radius: 10px;
   border: none;
-  box-shadow: 1px 1px 80px #C5D7DB;
+  box-shadow: 1px 1px 80px #b8cbcf;
 
   font-weight: bold;
 }
-#searchButton:hover{
+
+#searchButton:hover {
   background-color: #e1f5fa;
   cursor: pointer;
 }
 
 /* Pedidos */
-#accept{
+#accept {
   text-decoration: underline;
   color: #86999e;
 }

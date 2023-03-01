@@ -17,6 +17,6 @@ router.get('/myOrders', OrderController.listOrdersByUserId)
 router.get('/:id', OrderController.findOrderById)
 router.post('/add', OrderController.createOrder)
 router.get('/approve/:id', OrderController.aproveOrder)
-router.delete('/:id', OrderController.deleteOrder)
+router.get('/delete/:id', OrderController.deleteOrder)
 
 module.exports = router

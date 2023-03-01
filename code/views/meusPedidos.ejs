@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body id="productsBody">
+  <script src="https://kit.fontawesome.com/3a33c4c41c.js" crossorigin="anonymous"></script>
     <header class="homeHeader">
         <nav>
           <ul class="navbarLinks">
@@ -28,6 +29,10 @@
                 <p>Quantidade: <%= element.quantity %></p>
                 <% let aceito = element.accept == 'N' ? 'Não' : 'Sim' %>
                 <p>Aceito: <%= aceito %></p>
+                <p>Id do pedido: <%= element.id_order %></p>
+                <% if(element.accept == 'N'){ %>
+                <p><a href="/orders/delete/<%= element.id_order %>"><i class="fa-solid fa-trash"></i></a></p>
+                <% } %>
             </div>
         <% } %>
 
