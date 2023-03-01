@@ -18,7 +18,7 @@ class clientController {
     }
 
     const result = await clientModel.list_clients()
-    return res.json(result)
+    return res.render('clientsList', {result: result})
   }
 
   /**
@@ -251,5 +251,33 @@ class clientController {
     res.render('clientEdit', { user: user })
     return
   }
+
+  // Home
+  home(req, res){
+    if(!req.session.comissionaireId){
+      res.send('Acesso Restrito.')
+      return
+    }
+
+    res.render('clientsHome')
+    return
+  }
+
+  // Buscar cliente
+  async findClientePost(req, res){
+    if(!req.session.comissionaireId){
+        res.status(401).send('Acesso Restrito')
+        return
+    }
+
+    const cpf = parseInt(req.body.cpf)
+    const result = await clientModel.find_client_by_CPF(cpf)
+    if (result === null) {
+        return res.redirect('/404')
+    }
+
+    res.redirect(`/clientes/${result.cpf_cnpj}`)
+    return
+}
 }
 module.exports = new clientController()

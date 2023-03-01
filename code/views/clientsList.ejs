@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css" type="text/css">
+  <title>Lista de Clientes</title>
+</head>
+<body id="productsBody">
+  <header class="homeHeader">
+    <nav>
+      <ul class="navbarLinks">
+        <li><a href="/clientes"><input class="headerButtons" type="button" value="Voltar"></a></li>
+        <li><a href="/comissionaires/logout"><input class="headerButtons" type="button" value="Logout"></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="productsPage">
+    <% for(element of result){ %>
+        <div class="productList">
+            <h2>ID: <%= element.id_client %></h2>
+            <p>CPF/CNPJ: <%= element.cpf_cnpj %></p>
+            <p>Nome: <%= element.name %></p>
+            <p>Email: <%= element.email %></p>
+        </div>
+    <% } %>
+  </main>
+
+</body>
