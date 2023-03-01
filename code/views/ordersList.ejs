@@ -5,31 +5,29 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/styles.css" type="text/css">
-  <title>Lista de Produtos</title>
+  <title>Lista de Pedidos</title>
 </head>
 <body id="productsBody">
   <header class="homeHeader">
     <nav>
       <ul class="navbarLinks">
-
-        <li><a href="/produtos"><input class="headerButtons" type="button" value="Voltar"></a></li>
+        <li><a href="/orders"><input class="headerButtons" type="button" value="Voltar"></a></li>
         <li><a href="/comissionaires/logout"><input class="headerButtons" type="button" value="Logout"></a></li>
-
       </ul>
     </nav>
   </header>
 
   <main class="productsPage">
-
     <% for(element of result){ %>
-        <a href="/produtos/<%= element.id_products %>"><div class="productList">
+        <a href="/orders/<%= element.id_order %>"><div class="productList">
             <h2><%= element.product %></h2>
-            <p>Preço: R$<%= element.price %></p>
-            <% const unity = element.unity == 'l' ? 'Litro' : 'Kilograma' %>
-            <p>Unidade: <%= unity %></p>
+            <p>Quantidade: R$<%= element.quantity %></p>
+            <% const accept = element.accept == 'N' ? 'Não' : 'Sim' %>
+            <p>Aceito: <%= accept %></p>
+            <p>Id do cliente: <%= element.id_client %></p>
+            <p>Id do pedido: <%= element.id_order %>  </p>
         </div></a>
     <% } %>
-    
   </main>
 
 </body>

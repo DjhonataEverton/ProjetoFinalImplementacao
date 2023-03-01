@@ -365,3 +365,9 @@ ul {
   background-color: #e1f5fa;
   cursor: pointer;
 }
+
+/* Pedidos */
+#accept{
+  text-decoration: underline;
+  color: #86999e;
+}

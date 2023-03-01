@@ -19,12 +19,11 @@
   </header>
   
   <main class="homeBody">
-    <form action="/produtos/find" method="post" class="findProductForm">
-      <input type="number" class="findProductForm" id="searchInput" name="id" placeholder="Digite o ID do produto" required>
-      <input type="submit" class="findProductForm" id="searchButton" value="Buscar Produtos">
+    <form action="/orders/find" method="post" class="findProductForm">
+      <input type="number" class="findProductForm" id="searchInput" name="id" placeholder="Digite o ID do pedido." required>
+      <input type="submit" class="findProductForm" id="searchButton" value="Buscar Pedidos">
     </form>
-    <a href="/produtos/list"><input id="orderButton" type="button" value="Listar Produtos"></a>
-    <a href="/produtos/insert"><input id="orderButton" type="button" value="Inserir Produto"></a>
+    <a href="/orders/list"><input id="orderButton" type="button" value="Listar Pedidos"></a>
   </main>
 
 </body>

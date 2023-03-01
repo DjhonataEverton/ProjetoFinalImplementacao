@@ -69,7 +69,7 @@ class productController {
             return res.status(404).send('Produto não encontrado.')
         }
 
-        res.render('viewProduct', {product: result})
+        res.render('productView', {product: result})
         return
     }
     /**
@@ -150,7 +150,7 @@ class productController {
             return
         }
 
-        res.render('createProduct')
+        res.render('productsCreate')
         return
     }
 

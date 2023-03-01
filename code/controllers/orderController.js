@@ -16,16 +16,16 @@ class orderController {
         }
 
         const result = await orderModel.list_orders()
-        return res.json(result)
+        return res.render('ordersList', { result: result })
     }
 
     async listOrdersByUserId(req, res) {
-        if (!req.session.clientId){
+        if (!req.session.clientId) {
             return res.status(401).send('Usuário não logado!')
         }
-        
+
         const result = await orderModel.list_orders_by_client_id(req.session.clientId)
-        return res.render('meusPedidos', {result: result})
+        return res.render('meusPedidos', { result: result })
     }
 
     async createOrder(req, res) {
@@ -68,11 +68,11 @@ class orderController {
             return res.status(404).send('Order não existente')
         }
 
-        if (result.id_client != req.session.clientId) {
+        if (result.id_client != req.session.clientId && !req.session.comissionaireId) {
             return res.send('Cada cliente só pode ver seus próprios pedidos')
         }
 
-        return res.json(result)
+        return res.render('orderView', { result: result })
     }
     /**
    * 
@@ -95,6 +95,10 @@ class orderController {
         if (result.id_client != req.session.clientId) {
             return res.send('Cada cliente só pode remover apenas seus próprios pedidos.')
         }
+
+        if(result.accept == 'S'){
+            return res.send('Não é possível remover pedidos aceitos.')
+        } 
 
         await orderModel.delete_order(ID)
         return res.send(`Order de ID '${ID}' deletada.`)
@@ -121,8 +125,36 @@ class orderController {
         let ACCEPT = find.accept
         ACCEPT == 'N' ? ACCEPT = 'S' : ACCEPT = 'N'
 
-        const result = await orderModel.approve(ID, ACCEPT)
-        res.send(result)
+        await orderModel.approve(ID, ACCEPT)
+        res.redirect('/orders/list')
+    }
+
+
+    // Rotas Front
+    home(req, res) {
+        if (!req.session.comissionaireId) {
+            return res.status(401).send('Acesso Restrito')
+        }
+
+        res.render('ordersHome')
+        return
+    }
+
+    async findOrderPost(req, res){
+        if (!req.session.comissionaireId) {
+            return res.status(401).send('Acesso Restrito')
+        }
+        
+        const id = parseInt(req.body.id)
+        const result = await orderModel.find_order(id)
+
+        if(result == null){
+            res.redirect('/404')
+            return
+        }
+
+        res.redirect(`/orders/${result.id_order}`)
+        return
     }
 }
 

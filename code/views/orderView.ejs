@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://kit.fontawesome.com/3a33c4c41c.js" crossorigin="anonymous"></script>
+  </head>
+  <body id="productsBody">
+    <header class="homeHeader">
+        <nav>
+          <ul class="navbarLinks">
+            <li><a href="/orders/list"><button class="headerButtons">Voltar</button></a></li>           
+
+            <li><a href="/comissionaires/logout"><button class="headerButtons">Logout</button></a></li>
+          </ul>
+        </nav>
+      </header>
+
+    <main class="productsPage">
+        <div class="productList">
+          <h2><%= result.product %></h2>
+          <p>Quantidade: <%= result.quantity %></p>
+          <% let aceito = result.accept == 'N' ? 'Não' : 'Sim' %>
+          <p>Aceito: <%= aceito %></p>
+          <p>Id do cliente: <%= result.id_client %></p>
+          <p>Id do pedido: <%= result.id_order %></p>
+          <p><a id="accept" href="/orders/approve/<%= result.id_order %>">Aceitar/Recusar</a></p>
+        </div>
+    </main>
+</body>
+</html>
