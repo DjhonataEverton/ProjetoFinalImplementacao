@@ -2,7 +2,8 @@
 const express = require("express")
 const path = require("path")
 const app = express()
-const flash = require('connect-flash')
+const cookieParser = require('cookie-parser')
+const nocache = require('nocache')
 
 // Rotas
 const clientesRoutes = require("./routes/clientRoutes")
@@ -14,7 +15,9 @@ const comissionaireRoutes = require("./routes/comissionaireRoutes")
 const expressSession = require('express-session')
 const { PrismaSessionStore } = require('@quixo3/prisma-session-store')
 const { PrismaClient } = require('@prisma/client');
+const flash = require('express-flash')
 
+// Configurações
 app.use(
     expressSession({
         cookie: {
@@ -34,6 +37,9 @@ app.use(
     })
 );
 
+app.use(cookieParser())
+app.use(flash())
+app.use(nocache())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.set('views', path.join(__dirname, 'views'));
@@ -52,7 +58,8 @@ app.get('/404', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-    return res.render('home', { clientCpf: req.session.clientCpf, comissionaireId: req.session.comissionaireId })
+    const messages = req.flash('info');
+    return res.render('home', { clientCpf: req.session.clientCpf, comissionaireId: req.session.comissionaireId, messages: messages })
 })
 
 app.listen(3000, () => {

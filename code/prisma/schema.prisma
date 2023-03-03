@@ -47,6 +47,6 @@ model tb_products {
 model Session {
   id        String   @id
   sid       String   @unique
-  data      String
+  data      String   @db.LongText
   expiresAt DateTime
 }

@@ -108,8 +108,7 @@ class clientController {
       req.session.clientId = false
       req.session.clientCpf = false
 
-      res.redirect('/')
-      return
+      return res.redirect('/')
 
     } catch (err) {
       if (err.meta.target == 'tb_client_email_key') {
@@ -145,8 +144,7 @@ class clientController {
       req.session.clientCpf = false
       req.session.clientId = false
 
-      res.redirect('/')
-      return
+      return res.redirect('/')
 
     } catch (err) {
       if (err.code == 'P2003') {
@@ -180,6 +178,8 @@ class clientController {
     const auth = await clientModel.find_by_cpf_and_password(password, cpf)
 
     if (auth === null) {
+      // req.flash('info', 'Credenciais incorretas')
+      // return res.redirect('/')
       return res.status(401).send('Credenciais incorretas')
     }
 
@@ -187,18 +187,16 @@ class clientController {
     req.session.clientCpf = cpf
     req.session.comissionaireId = false
 
-    res.redirect('/')
-    return
+    return res.redirect('/')
   }
 
   async logout(req, res) {
-    if (req.session.clientId) {
+    if (req.session.clientCpf) {
       req.session.clientId = false
       req.session.clientCpf = false
     }
 
-    res.redirect('/')
-    return
+    return res.redirect('/')
   }
 
   // -----------Rotas front-------------
@@ -216,8 +214,7 @@ class clientController {
   // Dashboard
   dashboard(req, res) {
     if (!req.session.clientId) {
-      res.status(401).send('Usuário não logado')
-      return
+      return res.status(401).send('Usuário não logado')
 
     }
 
@@ -230,44 +227,40 @@ class clientController {
       return res.render('fazerPedido')
     }
 
-    res.redirect('/')
-    return
+    return res.redirect('/')
   }
 
   // Edição
   async editPage(req, res) {
     if (!req.session.clientCpf) {
-      res.send('Voce nao está logado')
-      return
+      return res.send('Voce nao está logado')
+      
     }
 
     const cpf = req.session.clientCpf
     const user = await clientModel.find_client_by_CPF(cpf)
 
     if (user == null) {
-      res.send('Usuário não encontrado')
+      return res.send('Usuário não encontrado')
     }
 
-    res.render('clientEdit', { user: user })
-    return
+    return res.render('clientEdit', { user: user })
+    
   }
 
   // Home
   home(req, res){
     if(!req.session.comissionaireId){
-      res.send('Acesso Restrito.')
-      return
+      return res.send('Acesso Restrito.')
     }
 
-    res.render('clientsHome')
-    return
+    return res.render('clientsHome')
   }
 
   // Buscar cliente
   async findClientePost(req, res){
     if(!req.session.comissionaireId){
-        res.status(401).send('Acesso Restrito')
-        return
+      return res.status(401).send('Acesso Restrito')
     }
 
     const cpf = parseInt(req.body.cpf)
@@ -276,8 +269,7 @@ class clientController {
         return res.redirect('/404')
     }
 
-    res.redirect(`/clientes/${result.cpf_cnpj}`)
-    return
+    return res.redirect(`/clientes/${result.cpf_cnpj}`)
 }
 }
 module.exports = new clientController()
